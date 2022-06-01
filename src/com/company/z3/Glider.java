@@ -1,4 +1,4 @@
 package com.company.z3;
 
-public class Glider {
+public class Glider extends Airship{
 }

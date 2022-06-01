@@ -1,4 +1,4 @@
 package com.company.z3;
 
-public class Section {
+public class Section extends Line{
 }
