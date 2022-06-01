@@ -1,4 +1,4 @@
 package com.company.z3;
 
-public class Punkt {
+public class Frame {
 }
