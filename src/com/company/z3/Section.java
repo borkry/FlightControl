@@ -3,9 +3,9 @@ package com.company.z3;
 public class Section extends Line{
     private double velocity;
     private double altitude;
-    private double direction;
+    private byte direction;
 
-    public Section(Point beginning, Point end, double velocity, double altitude, double direction) {
+    public Section(Point beginning, Point end, double velocity, double altitude, byte direction) {
         super(beginning, end);
         this.velocity = velocity;
         this.altitude = altitude;
@@ -20,7 +20,7 @@ public class Section extends Line{
         return altitude;
     }
 
-    public double getDirection() {
+    public byte getDirection() {
         return direction;
     }
 }

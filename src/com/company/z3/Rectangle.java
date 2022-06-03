@@ -20,6 +20,6 @@ public class Rectangle {
     }
 
     public void moveRectangle(double x, double y) {
-        location.przesunPunkt(x, y);
+        location.movePoint(x, y);
     }
 }

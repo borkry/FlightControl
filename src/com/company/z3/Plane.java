@@ -1,6 +1,12 @@
 package com.company.z3;
 
 public class Plane extends Airship{
-    //aaaa
-    //Pozdro Paweł Rudź
+    public Plane(Route route, Rectangle rectangle){
+        this.route = route;
+        this.collisionZone = rectangle;
+    }
+
+    /*public void draw(Graphics g){
+
+    }*/
 }

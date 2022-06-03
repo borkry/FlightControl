@@ -1,8 +1,8 @@
 package com.company.z3;
 
 public class Line {
-    public Point beginning;
-    public Point end;
+    protected Point beginning;
+    protected Point end;
 
     public Line(Point beginning, Point end) {
         this.beginning = new Point(beginning);
@@ -16,4 +16,8 @@ public class Line {
     public Point getEnd() {
         return end;
     }
+
+    /*public void draw(Graphics g){
+
+    }*/
 }
