@@ -12,7 +12,7 @@ public class Route {
 
     public void addSection(Point destination, double velocity, double altitude) {
         Section lastSection = sections.get(sections.size()-1);
-        byte lastSectionDirection = lastSection.getDirection();
+        int lastSectionDirection = lastSection.getDirection();
         sections.add(new Section(lastSection.getEnd(), destination, velocity, altitude, lastSectionDirection));
     }
 

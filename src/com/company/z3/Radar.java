@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.nio.file.Path;
 import java.io.IOException;
+import java.util.Random;
 
 public class Radar extends JPanel implements Runnable{
     private ArrayList<Airship> airships;
@@ -89,12 +90,54 @@ public class Radar extends JPanel implements Runnable{
         }
     }
 
-    public void drawAirship(int amount){
+    public void drawAirship(int amount){ //losowanie nowych samolotów
+        Random random = new Random();
+        for(int i=0;i<amount;i++){//pętla do losowania i tworzenia samolotu
+            int newAirshipType = random.nextInt(4);
+            int newAirshipX = random.nextInt(100);
+            int newAirshipY = random.nextInt(100);
+            int newAirshipWidth = random.nextInt(50);
+            int newAirshipHeight = random.nextInt(50);
+            Point newPoint = new Point(newAirshipX, newAirshipY);
+            MyRectangle newMyRectangle = new MyRectangle(newPoint, newAirshipWidth, newAirshipHeight);
 
+            int numberOfSections = random.nextInt(5);
+            ArrayList<Section> sections = new ArrayList<Section>(numberOfSections);
+            for(int j=0;j<numberOfSections;j++){//pętla do losowania i tworzenia trasy
+                int newBeginningX = random.nextInt(100);
+                int newBeginningY = random.nextInt(100);
+                int newEndingX = random.nextInt(100);
+                int newEndingY = random.nextInt(100);
+                double newVelocity = random.nextDouble(10);
+                double newAltitude = random.nextDouble(10);
+                int newDirection = random.nextInt(2);
+                Section newSection = new Section(new Point(newBeginningX, newBeginningY), new Point(newEndingX, newEndingY), newVelocity, newAltitude, newDirection);
+                sections.add(newSection);
+            }
+            Route newRoute = new Route(sections);
+            switch(newAirshipType){
+                case 0:
+                    Balloon balloon = new Balloon(newRoute, newMyRectangle);
+                    break;
+                case 1:
+                    Glider glider = new Glider(newRoute, newMyRectangle);
+                    break;
+                case 2:
+                    Helicopter helicopter = new Helicopter(newRoute, newMyRectangle);
+                    break;
+                case 3:
+                    Plane plane = new Plane(newRoute, newMyRectangle);
+                    break;
+            }
+        }
     }
 
     public void modifyRoute(int airshipId, Route newRoute){ //chyba trzeba przeszukać listę samolotów i ten, którego id=airshipId zmieniamy trase
-
+        for(Airship airship : airships){
+            if(airship.getId()==airshipId){
+                airship.route = newRoute;
+            }
+        }
     }
 
     public void checkCollision(){
