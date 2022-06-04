@@ -1,14 +1,20 @@
 package com.company.z3;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Radar {
+public class Radar extends JPanel {
     private ArrayList<Airship> airships;
     private ArrayList<GroundObject> groundObjects;
 
     public Radar(){
 
+    }
+
+    public ArrayList<Airship> getAirships() {
+        return airships;
     }
 
     public void loadMap(String fileName){
@@ -54,7 +60,7 @@ public class Radar {
 
     }
 
-    /*public void draw(Graphics g){
+    public void draw(Graphics g){
 
-    }*/
+    }
 }

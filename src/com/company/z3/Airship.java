@@ -5,6 +5,10 @@ public abstract class Airship {
     protected Rectangle collisionZone;
     private static int id;
 
+    public int getId() {
+        return id;
+    }
+
     public void modifyRoute(Route newRoute){
         this.route = newRoute;
     }
