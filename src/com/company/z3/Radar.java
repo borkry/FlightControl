@@ -4,8 +4,13 @@ import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.nio.file.Path;
+import java.io.IOException;
 
 public class Radar extends JPanel implements Runnable{
     private ArrayList<Airship> airships;
@@ -29,7 +34,21 @@ public class Radar extends JPanel implements Runnable{
         return airships;
     }
 
-    public void loadMap(String fileName){
+    public void loadMap(String fileName) throws IOException{ /// w pliku każa linijka wygląda tak: GroundObject x y width height
+        Path path = Paths.get(fileName);
+        List<String> lines = Files.readAllLines(path);
+
+        for(int i=0;i<lines.size();i++){
+            if(lines.get(i).equals("GroundObject")){
+                int groundObjectX = Integer.parseInt(lines.get(i+1));
+                int groundObjectY = Integer.parseInt(lines.get(i+2));
+                int groundObjectWidth = Integer.parseInt(lines.get(i+3));
+                int groundObjectHeight = Integer.parseInt(lines.get(i+4));
+                Point newPoint = new Point(groundObjectX, groundObjectY);
+                MyRectangle newMyRectangle = new MyRectangle(newPoint, groundObjectWidth, groundObjectHeight);
+                groundObjects.add(new GroundObject(newMyRectangle));
+            }
+        }
 
     }
 
