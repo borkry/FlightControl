@@ -97,7 +97,7 @@ public class Radar extends JPanel implements Runnable{
             int newAirshipX = random.nextInt(100);
             int newAirshipY = random.nextInt(100);
             int newAirshipWidth = random.nextInt(50);
-            int newAirshipHeight = random.nextInt(50);
+            int newAirshipHeight = newAirshipWidth;
             Point newPoint = new Point(newAirshipX, newAirshipY);
             MyRectangle newMyRectangle = new MyRectangle(newPoint, newAirshipWidth, newAirshipHeight);
 
