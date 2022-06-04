@@ -1,13 +1,13 @@
 package com.company.z3;
 
 public class GroundObject {
-    protected Rectangle collisionZone;
+    protected MyRectangle collisionZone;
 
-    public GroundObject(Rectangle rectangle){
-        this.collisionZone = rectangle;
+    public GroundObject(MyRectangle myRectangle){
+        this.collisionZone = myRectangle;
     }
 
-    public Rectangle getCollisionZone(){
+    public MyRectangle getCollisionZone(){
         return collisionZone;
     }
 

@@ -5,9 +5,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Menu extends JPanel {
-    ArrayList<String> myList;
+    //<String> myList;
     public Menu() {
-        //ArrayList<String> myList = new ArrayList<>(10);
+        ArrayList<String> myList = new ArrayList<>(10);
 
         for(int i =0; i<20; i++) {
             myList.add("Airship " +i);
@@ -22,11 +22,11 @@ public class Menu extends JPanel {
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
     }
 
-    public void setMyList(ArrayList<Airship> airships) {
-        myList = new ArrayList<>(airships.size());
-        for(Airship airship : airships) {
-            myList.add(Integer.toString(airship.getId()));
-        }
-    }
+//    public void setMyList(ArrayList<Airship> airships) {
+//        myList = new ArrayList<>(airships.size());
+//        for(Airship airship : airships) {
+//            myList.add(Integer.toString(airship.getId()));
+//        }
+//    }
 
 }

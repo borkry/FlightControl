@@ -1,11 +1,11 @@
 package com.company.z3;
 
-public class Rectangle {
+public class MyRectangle {
     private Point location;
     private double width;
     private double height;
 
-    public Rectangle(Point location, double width, double height) {
+    public MyRectangle(Point location, double width, double height) {
         this.location = new Point(location);
         this.width = width;
         this.height = height;

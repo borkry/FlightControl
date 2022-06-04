@@ -1,8 +1,10 @@
 package com.company.z3;
 
-public abstract class Airship {
+import java.awt.*;
+
+public abstract class Airship extends Rectangle {
     protected Route route;
-    protected Rectangle collisionZone;
+    protected MyRectangle collisionZone;
     private static int id;
 
     public int getId() {
@@ -21,7 +23,7 @@ public abstract class Airship {
     }
 
     public void move(){
-
+        collisionZone.moveRectangle(1,1); //"droga po ktorej sie porusza" - tutaj chyba trzeba dac parametry zeby dla kazdego obiektu mozna bylo dac inna droge, cos jakby funkcje linipwa chyba
     }
 
     public void drawRoute(){
