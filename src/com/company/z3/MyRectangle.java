@@ -18,6 +18,7 @@ public class MyRectangle {
     public double getHeight() {
         return height;
     }
+    public double getWidth() {return width;}
 
     public void moveRectangle(double x, double y) {
         location.movePoint(x, y);

@@ -20,7 +20,7 @@ public class Radar extends JPanel implements Runnable{
     Graphics graphics;
     ArrayList<Section> s1 = new ArrayList<Section>();
     Route r1 = new Route(s1);
-    MyRectangle myRectangle1 = new MyRectangle(new Point(5,6), 50,50); // stworzone do testow
+    MyRectangle myRectangle1 = new MyRectangle(new Point(5,6), 20,20); // stworzone do testow
     Plane plane1 = new Plane(r1, myRectangle1);
 
     Thread gameThread;
@@ -37,16 +37,17 @@ public class Radar extends JPanel implements Runnable{
     public void loadMap(String fileName) throws IOException{ /// w pliku każa linijka wygląda tak: GroundObject x y width height
         Path path = Paths.get(fileName);
         List<String> lines = Files.readAllLines(path);
-
+        groundObjects = new ArrayList<GroundObject>(lines.size()/6);
         for(int i=0;i<lines.size();i++){
             if(lines.get(i).equals("GroundObject")){
                 int groundObjectX = Integer.parseInt(lines.get(i+1));
                 int groundObjectY = Integer.parseInt(lines.get(i+2));
                 int groundObjectWidth = Integer.parseInt(lines.get(i+3));
-                int groundObjectHeight = Integer.parseInt(lines.get(i+4));
+                int groundObjectHeight = Integer.parseInt(lines.get(i+4));  // wysokosc prostokata do narysowania na mapie
+                int heightOfGroundObject = Integer.parseInt(lines.get(i+5)); // fizyczna wysokosc obiektu nieruchomego
                 Point newPoint = new Point(groundObjectX, groundObjectY);
                 MyRectangle newMyRectangle = new MyRectangle(newPoint, groundObjectWidth, groundObjectHeight);
-                groundObjects.add(new GroundObject(newMyRectangle));
+                groundObjects.add(new GroundObject(newMyRectangle, heightOfGroundObject));
             }
         }
 
@@ -113,6 +114,10 @@ public class Radar extends JPanel implements Runnable{
     }
 
     public void draw(Graphics g){
+        for(GroundObject go : groundObjects)
+            go.draw(g);
+//        groundObjects.get(0).draw(g);
+//        groundObjects.get(1).draw(g); //to mozna usunac
         plane1.draw(g);
     }
 }

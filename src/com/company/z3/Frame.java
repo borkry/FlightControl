@@ -2,11 +2,12 @@ package com.company.z3;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Frame extends JFrame {
     Radar radar;
     Menu menu;
-    public Frame(){
+    public Frame() throws IOException {
         this.setPreferredSize(new Dimension(1600, 900));
         this.setLayout(new BorderLayout(0,0));
 
@@ -15,6 +16,8 @@ public class Frame extends JFrame {
         Button button1 = new Button("Button 1");
         radar.add(button1);
         radar.setBackground(Color.red);
+        radar.loadMap("D:\\FlightControl\\src\\com\\company\\z3\\map.txt"); //UWAGA tutaj przekopiowac sciezke do mapy na swoim kompie
+
 
 
 
