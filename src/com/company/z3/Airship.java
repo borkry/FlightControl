@@ -5,7 +5,8 @@ import java.awt.*;
 public abstract class Airship extends Rectangle {
     protected Route route;
     protected MyRectangle collisionZone;
-    private static int id;
+    protected static int counter = 1000; // wartości id beda zaczynaly sie od 1000
+    protected int id;
 
     public int getId() {
         return id;
@@ -34,5 +35,12 @@ public abstract class Airship extends Rectangle {
 
     }*/
 
+    /*
+    public int getCounter(){
+        return counter;
+    }
+    public void incrementCounter(){
+        ++counter;
+    }*/
 
 }
