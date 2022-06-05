@@ -157,8 +157,22 @@ public class Radar extends JPanel implements Runnable{
         }
     }
     public void checkAirshipsCollisionsWithAirships(){ //sprawdzenie kolizji między statkami
-        for(int i=0; i<airships.size();i++){
-            for(int j=0;j<i;j++){
+        int j;
+        for(int i=0; i<airships.size();++i){//samoloty w liście przed samolotem i
+            for(j=0;j<i;++j){
+                if(airships.get(i).collisionZone == airships.get(j).collisionZone){ //jest kolizja między samolotami
+                    airships.get(i).ifCollision(airships.get(i));
+                    airships.get(j).ifCollision(airships.get(j));
+                }
+                /*else if(odległość między nimi < pewnej wartośći){
+                    jest zagrożenie kolizją, zmieniają się kolory samolotów
+                }
+                else{
+                    nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
+                }
+                 */
+            }
+            for(++j;j<airships.size();++j){ //samoloty w liście po samolocie i
                 if(airships.get(i).collisionZone == airships.get(j).collisionZone){ //jest kolizja między samolotami
                     airships.get(i).ifCollision(airships.get(i));
                     airships.get(j).ifCollision(airships.get(j));
