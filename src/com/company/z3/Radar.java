@@ -16,7 +16,6 @@ import java.util.Random;
 public class Radar extends JPanel implements Runnable{
     private ArrayList<Airship> airships;
     private ArrayList<GroundObject> groundObjects;
-
     Image image;
     Graphics graphics;
     ArrayList<Section> s1 = new ArrayList<Section>();
@@ -141,7 +140,42 @@ public class Radar extends JPanel implements Runnable{
         }
     }
 
+    public void checkAirshipsCollisionsWithGroundObjects(){ //sprawdzenie kolizji statków z obiektami naziemnymi
+        for(Airship airship : airships){
+            for(GroundObject groundObject : groundObjects){
+                if(airship.collisionZone == groundObject.collisionZone){ //jest kolizja samolotu z obiektem naziemnym
+                    airship.ifCollision(airship);
+                }
+                /*else if(odległość między nimi < pewnej wartośći){
+                    jest zagrożenie kolizją, zmienia się kolor samolotu
+                }
+                else{
+                    nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
+                }
+                 */
+            }
+        }
+    }
+    public void checkAirshipsCollisionsWithAirships(){ //sprawdzenie kolizji między statkami
+        for(int i=0; i<airships.size();i++){
+            for(int j=0;j<i;j++){
+                if(airships.get(i).collisionZone == airships.get(j).collisionZone){ //jest kolizja między samolotami
+                    airships.get(i).ifCollision(airships.get(i));
+                    airships.get(j).ifCollision(airships.get(j));
+                }
+                /*else if(odległość między nimi < pewnej wartośći){
+                    jest zagrożenie kolizją, zmieniają się kolory samolotów
+                }
+                else{
+                    nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
+                }
+                 */
+            }
+        }
+    }
     public void checkCollision(){
+        checkAirshipsCollisionsWithGroundObjects();
+        checkAirshipsCollisionsWithAirships();
 
     }
 
