@@ -1,0 +1,27 @@
+Swing Application Framework 
+
+  
+
+Swing was introduced in June 1997 by Sun Microsystems as an official Java Graphic User Interface tool kit. It is newer and upgraded version of AWT framework. It is a part of Java Foundation Classes (JFC). Swing is a Java GUI Framework useful when it comes to create graphics in project as it provides a set of GUI components in many classes. Swing classes are defined in javax.swing package and its sub-packages.  
+
+
+Advantages 
+
+Swing is platform-independent since its components are not implemented by platform-specific code as they are entirely written in Java language unlike AWT components. Thanks to that we can create applications that are looking unrelated to the underlying platform. 
+
+Enables vast customization and is extensible- Swing is a modular-based architecture allowing us to add our own implementations of specified framework interfaces.  
+
+Lightweight- most of Java Swing Framework components are renderd using purely Java code, example: drawLine, drawImage. They are ligtweight because they are not using native operating system to draw components which is often much more demanding. There are heavyweight components requiring allocation of native resources in the operating system's windowing toolkit in Java Swing, but they retain minority. 
+
+ 
+
+Packages javax.swing and java.avt have to be imported in order to use Java Swing Framework. There are two very base classes in that framework- JComponent and JFrame. JComponent is the base class for all Swing components except the top-level containers. JFrame is a base for windows (not operating system). It has some handy features such as setTitle(), setVisible(), setLayout(), setSize() etc 
+
+In order to create an application window we are supposed to create a class that is inheriting from JFrame. The next step could be choosing the layout manager (setLayout()) allowing us to arrange the user interface. There are a few layout managers, the most popular are FlowLayout, BorderLayout and GridLayout. Default action on closing the window can be applied with the setDefaultCloseOperation() feature. Finally we can show the world our window by typing setVisible(true). 
+
+Event handling is done by craeting Listeners containing the methods that are reacting to specified events. MouseListener with mouseClicked(), mouseEntered(), mouseExited(), mousePressed() and mouseReleased() methods, KeyListener with keyPressed(), keyRealeased() and keyTyped() methods, ComponentListener with componentShown(), componentHidden(), componentMoved(), componentResized() methods, WindowListener with windowOpened(), windowClosed(), windowActivated() methods are available to make application capable of communicate with the user.  
+
+Making the Java Swing application is similar to building with bricks as we use block components. Important components to design the application are JButton- the button that can be clicked to perform specified event, JLabel allowing adding some descriptions, JTextField and JTextArea used to gather data from user, JPanel with its own layout manager which is a container for other components and JComboBox letting the user chose options from a scroll menu bar. 
+
+Displaying messages is being implemented with a help of JOptionPane.showMessageDialog(), JOptionPane.showConfirmDialog(), JOptionPane.showOptionDialog() and JOptionPane.showInputDialog(). 
+
