@@ -77,7 +77,7 @@ public class Radar extends JPanel implements Runnable{
             lastTime = now;
             if(delta >= 1) {
                 move();
-                checkCollision();
+                //checkCollision();
                 repaint();
                 delta--;
             }
@@ -169,7 +169,7 @@ public class Radar extends JPanel implements Runnable{
             }
         }
     }
-    public void checkAirshipsCollisionsWithAirships(){ //sprawdzenie kolizji między statkami
+    /*public void checkAirshipsCollisionsWithAirships(){ //sprawdzenie kolizji między statkami
         int j;
         for(int i=0; i<airships.size();++i){//samoloty w liście przed samolotem i
             for(j=0;j<i;++j){
@@ -183,7 +183,9 @@ public class Radar extends JPanel implements Runnable{
                 else{
                     nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
                 }
-                 */
+
+
+
             }
             for(++j;j<airships.size();++j){ //samoloty w liście po samolocie i
                 if(airships.get(i).collisionZone == airships.get(j).collisionZone){ //jest kolizja między samolotami
@@ -196,7 +198,7 @@ public class Radar extends JPanel implements Runnable{
                 else{
                     nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
                 }
-                 */
+
             }
         }
     }
@@ -205,7 +207,7 @@ public class Radar extends JPanel implements Runnable{
         checkAirshipsCollisionsWithAirships();
 
     }
-
+*/
     public void move(){
         //plane1.move(plane1.getRoute().getCurrentSection());
 
@@ -237,7 +239,11 @@ public class Radar extends JPanel implements Runnable{
             if(airship instanceof Plane) {  //sprawdzam typ zeby rysowalo w danych kolorach np. plane - czarny
                 ((Plane) airship).draw(g);
             }
+            for(Section section : airship.getRoute().getSections()) {
+                section.draw(g);
+            }
         }
+
 
 
     }
