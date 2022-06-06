@@ -22,6 +22,9 @@ public class Point {
         return y;
     }
 
+    public void setX(double xx){this.x = xx; }
+    public void setY(double yy){this.y = yy; }      // NARAZIE niech bedzie, na koniec zobaczymy
+
     public void movePoint(double x, double y) {
         this.x += x;
         this.y += y;

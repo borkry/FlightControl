@@ -14,4 +14,6 @@ public class Plane extends Airship{
         g.setColor(Color.black);
         g.drawRect((int)collisionZone.getLocation().getX(),(int)collisionZone.getLocation().getY(), (int)collisionZone.getHeight(), (int)collisionZone.getHeight());
     }
+
+
 }
