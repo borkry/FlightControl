@@ -11,7 +11,7 @@ GroundObject
 70
 20
 GroundObject
-1000
+500
 100
 75
 40

@@ -16,15 +16,15 @@ public class Radar extends JPanel implements Runnable{
     private ArrayList<GroundObject> groundObjects;
     Image image;
     Graphics graphics;
-    Section section1 = new Section(new Point(500, 6), new Point(10,700), 300, 1000, 1);
-    Section section2 = new Section(new Point(10, 700), new Point(400,500), 300, 1000, 1);
-    Section section3 = new Section(new Point(400, 500), new Point(500,600), 300, 1000, 1);
+    Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 1000, 1);
+    Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 1000, 1);
+    Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 1000, 1);
     LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3));
     Route r1 = new Route(s1);
 
-    Section section4 = new Section(new Point(20, 650), new Point(1000,120), 300, 1000, 1);
-    Section section5 = new Section(new Point(1000, 120), new Point(400,700), 300, 1000, 1);
-    Section section6 = new Section(new Point(400, 700), new Point(20,20), 300, 1000, 1);
+    Section section4 = new Section(new Point(100, 100), new Point(100,300), 300, 1000, 1);
+    Section section5 = new Section(new Point(100, 300), new Point(200,300), 300, 1000, 1);
+    Section section6 = new Section(new Point(200, 300), new Point(200,400), 300, 1000, 1);
     LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section4, section5, section6));
     Route r2 = new Route(s2);
 
@@ -33,7 +33,7 @@ public class Radar extends JPanel implements Runnable{
     Plane plane1 = new Plane(r1, myRectangle1);
     Plane plane2 = new Plane(r2, myRectangle2);
 
-    ArrayList<Airship> arrships= new ArrayList<>(Arrays.asList(plane1, plane2)); //lista do testow
+    ArrayList<Airship> arrships = new ArrayList<>(Arrays.asList(plane1, plane2)); //lista do testow
 
 
     Thread gameThread;
@@ -153,7 +153,7 @@ public class Radar extends JPanel implements Runnable{
         }
     }
 
-    public void checkAirshipsCollisionsWithGroundObjects(){ //sprawdzenie kolizji statków z obiektami naziemnymi
+  /*  public void checkAirshipsCollisionsWithGroundObjects(){ //sprawdzenie kolizji statków z obiektami naziemnymi
         for(Airship airship : airships){
             for(GroundObject groundObject : groundObjects){
                 if(airship.collisionZone == groundObject.collisionZone){ //jest kolizja samolotu z obiektem naziemnym
@@ -165,7 +165,7 @@ public class Radar extends JPanel implements Runnable{
                 else{
                     nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
                 }
-                 */
+
             }
         }
     }
@@ -201,19 +201,19 @@ public class Radar extends JPanel implements Runnable{
 
             }
         }
-    }
+    } */
     public void checkCollision(){
-        checkAirshipsCollisionsWithGroundObjects();
-        checkAirshipsCollisionsWithAirships();
+        //checkAirshipsCollisionsWithGroundObjects();
+        //checkAirshipsCollisionsWithAirships();
 
     }
-*/
+
     public void move(){
         //plane1.move(plane1.getRoute().getCurrentSection());
 
         //plane1.move(s1.get(1));
         //plane1.move(section1);
-        for(Airship airship : arrships) { //do testow
+        for(Airship airship : airships) { //do testow
             //if(airship.getReachedDestination())
               //  arrships.remove(airship);
             airship.move(airship.getRoute().getCurrentSection());
