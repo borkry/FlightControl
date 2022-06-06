@@ -6,12 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
 import java.nio.file.Path;
 import java.io.IOException;
-import java.util.Random;
+import java.util.List;
 
 public class Radar extends JPanel implements Runnable{
     private ArrayList<Airship> airships;
@@ -19,10 +17,25 @@ public class Radar extends JPanel implements Runnable{
 
     Image image;
     Graphics graphics;
-    ArrayList<Section> s1 = new ArrayList<Section>();
+    Section section1 = new Section(new Point(500, 6), new Point(10,700), 300, 1000, 1);
+    Section section2 = new Section(new Point(10, 700), new Point(400,500), 300, 1000, 1);
+    Section section3 = new Section(new Point(400, 500), new Point(500,600), 300, 1000, 1);
+    LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3));
     Route r1 = new Route(s1);
-    MyRectangle myRectangle1 = new MyRectangle(new Point(5,6), 20,20); // stworzone do testow
+
+    Section section4 = new Section(new Point(20, 650), new Point(1000,120), 300, 1000, 1);
+    Section section5 = new Section(new Point(1000, 120), new Point(400,700), 300, 1000, 1);
+    Section section6 = new Section(new Point(400, 700), new Point(20,20), 300, 1000, 1);
+    LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section4, section5, section6));
+    Route r2 = new Route(s2);
+
+    MyRectangle myRectangle1 = new MyRectangle(new Point(500,6), 20,20); // stworzone do testow
+    MyRectangle myRectangle2 = new MyRectangle(new Point(20,650), 20,20); // stworzone do testow
     Plane plane1 = new Plane(r1, myRectangle1);
+    Plane plane2 = new Plane(r2, myRectangle2);
+
+    ArrayList<Airship> arrships= new ArrayList<>(Arrays.asList(plane1, plane2)); //lista do testow
+
 
     Thread gameThread;
 
@@ -103,7 +116,7 @@ public class Radar extends JPanel implements Runnable{
             MyRectangle newMyRectangle = new MyRectangle(newPoint, newAirshipWidth, newAirshipHeight);
 
             int numberOfSections = random.nextInt(5);
-            ArrayList<Section> sections = new ArrayList<Section>(numberOfSections);
+            LinkedList<Section> sections = new LinkedList<Section>();
             for(int j=0;j<numberOfSections;j++){//pętla do losowania i tworzenia trasy
                 int newBeginningX = random.nextInt(100);
                 int newBeginningY = random.nextInt(100);
@@ -146,7 +159,16 @@ public class Radar extends JPanel implements Runnable{
     }
 
     public void move(){
-        plane1.move();
+        //plane1.move(plane1.getRoute().getCurrentSection());
+
+        //plane1.move(s1.get(1));
+        //plane1.move(section1);
+        for(Airship airship : arrships) { //do testow
+            //if(airship.getReachedDestination())
+              //  arrships.remove(airship);
+            airship.move(airship.getRoute().getCurrentSection());
+        }
+
     }
 
     public void paint(Graphics g) {
@@ -161,6 +183,14 @@ public class Radar extends JPanel implements Runnable{
             go.draw(g);
 //        groundObjects.get(0).draw(g);
 //        groundObjects.get(1).draw(g); //to mozna usunac
-        plane1.draw(g);
+        //plane1.draw(g);
+
+        for(Airship airship : arrships) {
+            if(airship instanceof Plane) {  //sprawdzam typ zeby rysowalo w danych kolorach np. plane - czarny
+                ((Plane) airship).draw(g);
+            }
+        }
+
+
     }
 }

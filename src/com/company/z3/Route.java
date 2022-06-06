@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Route {
-    private ArrayList<Section> sections;    // moze zmienic na Linked List?
+    private LinkedList<Section> sections;    // moze zmienic na Linked List?
 
-    public Route(ArrayList<Section> sections) {
+    public Route(LinkedList<Section> sections) {
         this.sections = sections;
     }
 
@@ -20,6 +20,19 @@ public class Route {
         if(sections.size()>0) {
             sections.remove(sections.size()-1);
         }
+    }
+
+    public Section getCurrentSection() {
+        return sections.get(0);
+    }
+
+    public void moveToNextSection() {
+        if(sections.size()>0)
+            sections.remove();
+    }
+
+    public LinkedList<Section> getSections() {
+        return sections;
     }
 
 //    public Section getCurrentSection() {
