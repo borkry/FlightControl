@@ -23,4 +23,5 @@ public class Section extends Line{
     public int getDirection() {
         return direction;
     }
+
 }

@@ -1,5 +1,7 @@
 package com.company.z3;
 
+import java.awt.*;
+
 public class Line {
     protected Point beginning;
     protected Point end;
@@ -17,7 +19,7 @@ public class Line {
         return end;
     }
 
-    /*public void draw(Graphics g){
-
-    }*/
+    public void draw(Graphics g){
+        g.drawLine((int)beginning.getX(), (int)beginning.getY(), (int)end.getX(), (int)end.getY());
+    }
 }
