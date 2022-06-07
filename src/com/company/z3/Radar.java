@@ -16,16 +16,24 @@ public class Radar extends JPanel implements Runnable{
     private ArrayList<GroundObject> groundObjects;
     Image image;
     Graphics graphics;
-    Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 1000, 1);
-    Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 1000, 1);
-    Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 1000, 1);
-    LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3));
+    Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 200, 1);
+    Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 200, 1);
+    Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 200, 1);
+
+
+    Section section4 = new Section(new Point(200, 200), new Point(200,200), 0,0,1);
+    //teraz ten odcinek jest ostatni na liscie i nie jest usuwany, w funkcji trzeba bedzie dodawac go automatycznie bez wiedzy usera dajac mu wspolrzedne ostatniego polozenia samolotu, dzieki temu mozna usunac fakttyczny ostatni odcinek bez crasha programu. Mysle ze mozemy nie usuwac samolotu, on sobie wyladowal i stoi na ziemi tamu ma zerowa predkosc i wysokosc:P
+
+    LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3, section4));
     Route r1 = new Route(s1);
 
-    Section section4 = new Section(new Point(100, 100), new Point(100,300), 300, 1000, 1);
-    Section section5 = new Section(new Point(100, 300), new Point(200,300), 300, 1000, 1);
-    Section section6 = new Section(new Point(200, 300), new Point(200,400), 300, 1000, 1);
-    LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section4, section5, section6));
+    Section section5 = new Section(new Point(100, 100), new Point(300,120), 300, 1000, 1);
+    Section section6 = new Section(new Point(300, 120), new Point(600,120), 300, 1000, 1);
+    Section section7 = new Section(new Point(600, 120), new Point(700,220), 300, 1000, 1);
+    Section section8 = new Section(new Point(700,220), new Point(700,220), 0,0,1);
+    // to samo co section 4
+
+    LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section5, section6, section7, section8));
     Route r2 = new Route(s2);
 
     MyRectangle myRectangle1 = new MyRectangle(new Point(50,60), 20,20); // stworzone do testow
@@ -56,7 +64,7 @@ public class Radar extends JPanel implements Runnable{
                 int groundObjectX = Integer.parseInt(lines.get(i+1));
                 int groundObjectY = Integer.parseInt(lines.get(i+2));
                 int groundObjectWidth = Integer.parseInt(lines.get(i+3));
-                int groundObjectHeight = Integer.parseInt(lines.get(i+4));  // wysokosc prostokata do narysowania na mapie
+                int groundObjectHeight = Integer.parseInt(lines.get(i+4));  // wspolrzedna prostokata do narysowania na mapie
                 int heightOfGroundObject = Integer.parseInt(lines.get(i+5)); // fizyczna wysokosc obiektu nieruchomego
                 Point newPoint = new Point(groundObjectX, groundObjectY);
                 MyRectangle newMyRectangle = new MyRectangle(newPoint, groundObjectWidth, groundObjectHeight);

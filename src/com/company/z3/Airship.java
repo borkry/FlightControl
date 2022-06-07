@@ -44,7 +44,7 @@ public abstract class Airship extends Rectangle {
         if(Math.sqrt(Math.pow((route.getCurrentSection().end.getX() - collisionZone.getLocation().getX()), 2) + Math.pow((route.getCurrentSection().end.getY() - collisionZone.getLocation().getY()), 2)) < Math.sqrt(Math.pow((collisionZone.getLocation().getX()+moveX - collisionZone.getLocation().getX()), 2) + Math.pow((collisionZone.getLocation().getY()+moveY- collisionZone.getLocation().getY()), 2) )) {
             collisionZone.getLocation().setX(route.getCurrentSection().end.getX());
             collisionZone.getLocation().setY(route.getCurrentSection().end.getY());
-            if(route.getSections().size()>1)
+            if(route.getSections().size()>0)
                 route.moveToNextSection();
             else
                 reachedDestination = true;

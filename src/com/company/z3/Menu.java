@@ -17,7 +17,7 @@ public class Menu extends JPanel {
         scrollPane.setViewportView(list);
         list.setLayoutOrientation(JList.VERTICAL);
         this.add(scrollPane);
-        this.setPreferredSize(new Dimension(1600, 100));
+        this.setPreferredSize(new Dimension(1200, 100));
         this.setBackground(Color.CYAN);
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
     }

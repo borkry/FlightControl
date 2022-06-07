@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+import static java.awt.SystemColor.window;
+
 public class Frame extends JFrame {
     Radar radar;
     Menu menu;
+
     public Frame() throws IOException {
-        this.setPreferredSize(new Dimension(1600, 900));
+        this.setPreferredSize(new Dimension(1200, 700));
         this.setLayout(new BorderLayout(0,0));
 
         radar = new Radar();
@@ -17,11 +20,6 @@ public class Frame extends JFrame {
         radar.add(button1);
         radar.setBackground(Color.red);
         radar.loadMap("D:\\FlightControl\\src\\com\\company\\z3\\map.txt"); //UWAGA tutaj przekopiowac sciezke do mapy na swoim kompie
-
-
-
-
-
 
 
 

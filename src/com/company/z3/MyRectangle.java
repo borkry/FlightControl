@@ -6,6 +6,7 @@ public class MyRectangle {
     private double height;
 
     public MyRectangle(Point location, double width, double height) {
+        location.movePoint(-(width/2),-(height/2));
         this.location = new Point(location);
         this.width = width;
         this.height = height;
