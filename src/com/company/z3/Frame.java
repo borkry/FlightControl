@@ -8,7 +8,7 @@ public class Frame extends JFrame {
     Radar radar;
     Menu menu;
     public Frame() throws IOException {
-        this.setPreferredSize(new Dimension(1200, 700));
+        this.setPreferredSize(new Dimension(1600, 900));
         this.setLayout(new BorderLayout(0,0));
 
         radar = new Radar();

@@ -28,8 +28,8 @@ public class Radar extends JPanel implements Runnable{
     LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section4, section5, section6));
     Route r2 = new Route(s2);
 
-    MyRectangle myRectangle1 = new MyRectangle(new Point(500,6), 20,20); // stworzone do testow
-    MyRectangle myRectangle2 = new MyRectangle(new Point(20,650), 20,20); // stworzone do testow
+    MyRectangle myRectangle1 = new MyRectangle(new Point(50,60), 20,20); // stworzone do testow
+    MyRectangle myRectangle2 = new MyRectangle(new Point(100,100), 20,20); // stworzone do testow
     Plane plane1 = new Plane(r1, myRectangle1);
     Plane plane2 = new Plane(r2, myRectangle2);
 
@@ -213,7 +213,7 @@ public class Radar extends JPanel implements Runnable{
 
         //plane1.move(s1.get(1));
         //plane1.move(section1);
-        for(Airship airship : airships) { //do testow
+        for(Airship airship : arrships) { //do testow
             //if(airship.getReachedDestination())
               //  arrships.remove(airship);
             airship.move(airship.getRoute().getCurrentSection());
