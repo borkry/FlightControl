@@ -20,6 +20,7 @@ public class Frame extends JFrame {
         radar.add(button1);
         radar.setBackground(Color.red);
         radar.loadMap("D:\\FlightControl\\src\\com\\company\\z3\\map.txt"); //UWAGA tutaj przekopiowac sciezke do mapy na swoim kompie
+        menu.showAirshipList(radar.getAirships());
 
 
 
