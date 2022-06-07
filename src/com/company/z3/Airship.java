@@ -29,7 +29,7 @@ public abstract class Airship extends Rectangle {
     }
 
     public void move(Section section){
-        double speed = section.getVelocity()/100;
+        double speed = section.getVelocity()/200;
         double deltaX = section.getEnd().getX() - collisionZone.getLocation().getX();
         double deltaY = section.getEnd().getY() - collisionZone.getLocation().getY();
         double angle = Math.atan2(deltaY, deltaX);
