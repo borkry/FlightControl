@@ -24,7 +24,7 @@ public class Radar extends JPanel implements Runnable{
     Section section4 = new Section(new Point(200, 200), new Point(200,200), 0,0,1);
     //teraz ten odcinek jest ostatni na liscie i nie jest usuwany, w funkcji trzeba bedzie dodawac go automatycznie bez wiedzy usera dajac mu wspolrzedne ostatniego polozenia samolotu, dzieki temu mozna usunac fakttyczny ostatni odcinek bez crasha programu. Mysle ze mozemy nie usuwac samolotu, on sobie wyladowal i stoi na ziemi tamu ma zerowa predkosc i wysokosc:P
 
-    LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3, section4));
+    LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3));
     Route r1 = new Route(s1);
 
     Section section5 = new Section(new Point(100, 100), new Point(300,120), 300, 1000, 1);
@@ -33,7 +33,7 @@ public class Radar extends JPanel implements Runnable{
     Section section8 = new Section(new Point(700,220), new Point(700,220), 0,0,1);
     // to samo co section 4
 
-    LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section5, section6, section7, section8));
+    LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section5, section6, section7));
     Route r2 = new Route(s2);
 
     MyRectangle myRectangle1 = new MyRectangle(new Point(50,60), 20,20); // stworzone do testow
@@ -52,7 +52,7 @@ public class Radar extends JPanel implements Runnable{
     }
 
     public ArrayList<Airship> getAirships() {
-        return airships;
+        return arrships;
     }
 
     public void loadMap(String fileName) throws IOException{ /// w pliku każa linijka wygląda tak: GroundObject x y width height
@@ -221,16 +221,19 @@ public class Radar extends JPanel implements Runnable{
 
         //plane1.move(s1.get(1));
         //plane1.move(section1);
-        for(Airship airship : arrships) { //do testow
-            //if(airship.getReachedDestination())
-              //  arrships.remove(airship);
-            airship.move(airship.getRoute().getCurrentSection());
+        if (arrships.size()>0) {
+            for (Airship airship : arrships) { //do testow
+                airship.move(airship.getRoute().getCurrentSection());
+                if (airship.getReachedDestination())
+                    arrships.remove(airship);
+                if (arrships.size() == 0)
+                    break;
+            }
         }
-
     }
 
     public void paint(Graphics g) {
-        image = createImage(1600, 900);
+        image = createImage(1200, 700);
         graphics = image.getGraphics();
         draw(graphics);
         g.drawImage(image, 0, 0, this); // To ogólny obraz radaru jakby

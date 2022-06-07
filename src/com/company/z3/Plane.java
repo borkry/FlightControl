@@ -12,6 +12,7 @@ public class Plane extends Airship{
 
     public void draw(Graphics g){
         g.setColor(Color.black);
+        g.drawString(Integer.toString(id), (int) collisionZone.getLocation().getX()-1, (int) collisionZone.getLocation().getY()-1); // wyswietlanie id nad statkiem na radarze
         g.drawRect((int)collisionZone.getLocation().getX(),(int)collisionZone.getLocation().getY(), (int)collisionZone.getHeight(), (int)collisionZone.getHeight());
     }
 

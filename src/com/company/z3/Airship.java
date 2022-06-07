@@ -29,7 +29,7 @@ public abstract class Airship extends Rectangle {
     }
 
     public void move(Section section){
-        double speed = section.getVelocity()/100;
+        double speed = section.getVelocity()/200;
         double deltaX = section.getEnd().getX() - collisionZone.getLocation().getX();
         double deltaY = section.getEnd().getY() - collisionZone.getLocation().getY();
         double angle = Math.atan2(deltaY, deltaX);
@@ -44,7 +44,7 @@ public abstract class Airship extends Rectangle {
         if(Math.sqrt(Math.pow((route.getCurrentSection().end.getX() - collisionZone.getLocation().getX()), 2) + Math.pow((route.getCurrentSection().end.getY() - collisionZone.getLocation().getY()), 2)) < Math.sqrt(Math.pow((collisionZone.getLocation().getX()+moveX - collisionZone.getLocation().getX()), 2) + Math.pow((collisionZone.getLocation().getY()+moveY- collisionZone.getLocation().getY()), 2) )) {
             collisionZone.getLocation().setX(route.getCurrentSection().end.getX());
             collisionZone.getLocation().setY(route.getCurrentSection().end.getY());
-            if(route.getSections().size()>0)
+            if(route.getSections().size()>1)
                 route.moveToNextSection();
             else
                 reachedDestination = true;
