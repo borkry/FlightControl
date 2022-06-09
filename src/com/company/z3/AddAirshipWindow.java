@@ -3,19 +3,24 @@ package com.company.z3;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import static java.lang.Double.parseDouble;
 
 public class AddAirshipWindow extends JPanel implements ActionListener {
 
     JFrame addAirshipFrame = new JFrame();
     JRadioButton rbPlane, rbHeli, rbGlider, rbBallon;
-    JButton addLocation, addAirship;
+    JButton addDestination, addAirship, setStart;
+    JTextField enterX1, enterY1, enterX2, enterY2, enterAltitude, enterVelocity;
 
-    public void AddAirshipWindow(){
+    AddAirshipWindow(){
         //label.setFont(new Font(null,Font.PLAIN,25));      na potem
 
         JLabel lChoose = new JLabel("Wybierz typ statku:");
         ButtonGroup bgChoose = new ButtonGroup();
-        rbPlane = new JRadioButton("Samolot");
+        rbPlane = new JRadioButton("Samolot", true);
         rbHeli = new JRadioButton("Helikopter");
         rbGlider = new JRadioButton("Szybowiec");
         rbBallon = new JRadioButton("Balon");
@@ -24,42 +29,58 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         bgChoose.add(rbGlider);
         bgChoose.add(rbBallon);
 
+        JLabel sizeHintX = new JLabel("Zakres X: <0;1200>");
+        JLabel sizeHintY = new JLabel("Zakres Y: <0;600>");
+
         JLabel lStartPosition = new JLabel("Podaj położenie początkowe statku:");
         JLabel lStartX = new JLabel("X:");
-        JTextField enterX1 = new JTextField(4);
+            enterX1 = new JTextField(4);
         JLabel lStartY = new JLabel("Y:");
-        JTextField enterY1 = new JTextField(4);
+            enterY1 = new JTextField(4);
+            setStart = new JButton("Zatwierdź");
 
-        JLabel lDestination = new JLabel("Podaj cel statku:");
+        JLabel lDestination = new JLabel("Podaj cel statku, wysokość oraz prędkość na trasie:");
         JLabel lDestinationX= new JLabel("X:");
-        JTextField enterX2 = new JTextField(4);
+            enterX2 = new JTextField(4);
         JLabel lDestinationY = new JLabel("Y:");
-        JTextField enterY2 = new JTextField(4);
-
-        addLocation = new JButton("Dodaj");
+        enterY2 = new JTextField(4);
+        JLabel lDestinationAltitude= new JLabel("Prędkość:");
+        enterAltitude = new JTextField(4);
+        JLabel lDestinationVelocity = new JLabel("Wysokość:");
+        enterVelocity = new JTextField(4);
+            addDestination = new JButton("Dodaj cel");
         JLabel hint = new JLabel("Możesz wskazać kilka kolejnych celów przed zatwierdzeniem trasy.");
-        addAirship = new JButton("Zatwierdź");
+            addAirship = new JButton("Zatwierdź trasę");
 
         lChoose.setBounds(5,0,300,30);
         rbPlane.setBounds(5,30,90,30);
         rbHeli.setBounds(95,30,90,30);
         rbGlider.setBounds(185,30,90,30);
         rbBallon.setBounds(275,30,90,30);
+        sizeHintX.setBounds(380,0,110,20);
+        sizeHintY.setBounds(380,20,110,20);
 
         lStartPosition.setBounds(5,60,220,30);
         lStartX.setBounds(5,90,20,30);
         enterX1.setBounds(25,90,30,30);
         lStartY.setBounds(65,90,20,30);
         enterY1.setBounds(85,90,30,30);
+        setStart.setBounds(350,90,110,30);
 
-        lDestination.setBounds(5,120,220,30);
+        lDestination.setBounds(5,120,420,30);
         lDestinationX.setBounds(5,150,20,30);
         enterX2.setBounds(25,150,30,30);
         lDestinationY.setBounds(65,150,20,30);
         enterY2.setBounds(85,150,30,30);
-        addLocation.setBounds(120,150,100,30);
-        hint.setBounds(5,150,500,30);
-        addAirship.setBounds(5,180, 100,30);
+        lDestinationAltitude.setBounds(125, 150, 65,30);
+        enterAltitude.setBounds(190, 150,30,30);
+        lDestinationVelocity.setBounds(230,150,65,30);
+        enterVelocity.setBounds(300,150,30,30);
+        addDestination.setBounds(350,150,110,30);
+        hint.setBounds(5,180,500,30);
+
+
+        addAirship.setBounds(180,220, 140,30);
 
 
         addAirshipFrame.add(lChoose);
@@ -67,17 +88,26 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         addAirshipFrame.add(rbHeli);
         addAirshipFrame.add(rbGlider);
         addAirshipFrame.add(rbBallon);
+        addAirshipFrame.add(sizeHintX);
+        addAirshipFrame.add(sizeHintY);
+
         addAirshipFrame.add(lStartPosition);
         addAirshipFrame.add(lStartX);
         addAirshipFrame.add(enterX1);
         addAirshipFrame.add(lStartY);
         addAirshipFrame.add(enterY1);
+        addAirshipFrame.add(setStart);
         addAirshipFrame.add(lDestination);
         addAirshipFrame.add(lDestinationX);
         addAirshipFrame.add(enterX2);
         addAirshipFrame.add(lDestinationY);
         addAirshipFrame.add(enterY2);
-        addAirshipFrame.add(addLocation);
+        addAirshipFrame.add(lDestinationAltitude);
+        addAirshipFrame.add(lDestinationVelocity);
+        addAirshipFrame.add(enterAltitude);
+        addAirshipFrame.add(enterVelocity);
+        addAirshipFrame.add(addDestination);
+        addAirshipFrame.add(hint);
         addAirshipFrame.add(addAirship);
 
         addAirshipFrame.setTitle("Dodawanie samolotu");
@@ -85,17 +115,89 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         addAirshipFrame.setLayout(null);
         addAirshipFrame.setLocationRelativeTo(null);
         addAirshipFrame.setVisible(true);
+        addAirshipFrame.setResizable(false);
 
         rbPlane.addActionListener(this);
         rbHeli.addActionListener(this);
         rbGlider.addActionListener(this);
         rbBallon.addActionListener(this);
         addAirship.addActionListener(this);
+        setStart.addActionListener(this);
+        addDestination.addActionListener((this));
+        enterVelocity.addActionListener(this);
+        enterAltitude.addActionListener(this);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        double startX=0, startY=0;
+        ArrayList<Double> destinationX = new ArrayList<>();
+        ArrayList<Double> destinationY = new ArrayList<>();
+        ArrayList<Double> altitude = new ArrayList<>();
+        ArrayList<Double> velocity = new ArrayList<>();
+        MyRectangle newRectangle;
+
+        boolean checkpoint1=false, checkpoint2=false;
+        Point startPoint = new Point(0,0), destinationPoint = new Point(0,0);
+        Section newSection;
+        LinkedList<Section> sections = new LinkedList<>();
+        Route newRoute;
+
+
+        if(e.getSource()==setStart) {
+            startX = parseDouble(enterX1.getText());
+            startY = parseDouble(enterY1.getText());
+            enterX1.setText("");
+            enterY1.setText("");
+            checkpoint1 = true;
+        }
+        if(e.getSource()==addDestination) {
+            destinationX.add(parseDouble(enterX2.getText()));
+            destinationY.add(parseDouble(enterY2.getText()));
+            altitude.add(parseDouble(enterY2.getText()));
+            velocity.add(parseDouble(enterY2.getText()));
+            enterX2.setText("");
+            enterY2.setText("");
+            enterAltitude.setText("");
+            enterVelocity.setText("");
+            checkpoint2 = true;
+        }
+        if(e.getSource()==addAirship) {
+            if (checkpoint1 && checkpoint2) {
+                startPoint = new Point(startX, startY);
+                destinationPoint = new Point(destinationX.get(0).doubleValue(), destinationY.get(0).doubleValue());
+                newSection = new Section(startPoint, destinationPoint, velocity.get(0).doubleValue(), altitude.get(0).doubleValue());
+                sections.add(newSection);
+
+                for (int i = 1; i < destinationX.size(); i++) {
+                    startPoint = destinationPoint;
+                    destinationPoint = new Point(destinationX.get(i).doubleValue(), destinationY.get(i).doubleValue());
+                    newSection = new Section(startPoint, destinationPoint, velocity.get(i).doubleValue(), altitude.get(i).doubleValue());
+                    sections.add(newSection);
+                }
+
+                newRoute = new Route(sections);
+
+                if (rbBallon.isSelected()) {
+                    newRectangle = new MyRectangle(startPoint, 20, 20);
+                    Balloon newBallon = new Balloon(newRoute, newRectangle);
+                }
+                if (rbHeli.isSelected()) {
+                    newRectangle = new MyRectangle(startPoint, 50, 50);
+                    Helicopter newHelicopter = new Helicopter(newRoute, newRectangle);
+                }
+                if (rbGlider.isSelected()) {
+                    newRectangle = new MyRectangle(startPoint, 40, 20);
+                    Glider newGlider = new Glider(newRoute, newRectangle);
+                }
+                if (rbPlane.isSelected()) {
+                    newRectangle = new MyRectangle(startPoint, 70, 70);
+                    Plane newPlane = new Plane(newRoute, newRectangle);
+                }
+                addAirshipFrame.dispose();
+            }
+        }
     }
 }

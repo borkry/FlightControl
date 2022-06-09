@@ -16,21 +16,21 @@ public class Radar extends JPanel implements Runnable{
     private ArrayList<GroundObject> groundObjects;
     Image image;
     Graphics graphics;
-    Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 200, 1);
-    Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 200, 1);
-    Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 200, 1);
+    Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 200);
+    Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 200);
+    Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 200);
 
 
-    Section section4 = new Section(new Point(200, 200), new Point(200,200), 0,0,1);
+    Section section4 = new Section(new Point(200, 200), new Point(200,200), 0,0);
     //teraz ten odcinek jest ostatni na liscie i nie jest usuwany, w funkcji trzeba bedzie dodawac go automatycznie bez wiedzy usera dajac mu wspolrzedne ostatniego polozenia samolotu, dzieki temu mozna usunac fakttyczny ostatni odcinek bez crasha programu. Mysle ze mozemy nie usuwac samolotu, on sobie wyladowal i stoi na ziemi tamu ma zerowa predkosc i wysokosc:P
 
     LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3));
     Route r1 = new Route(s1);
 
-    Section section5 = new Section(new Point(100, 100), new Point(300,120), 300, 1000, 1);
-    Section section6 = new Section(new Point(300, 120), new Point(600,120), 300, 1000, 1);
-    Section section7 = new Section(new Point(600, 120), new Point(700,220), 300, 1000, 1);
-    Section section8 = new Section(new Point(700,220), new Point(700,220), 0,0,1);
+    Section section5 = new Section(new Point(100, 100), new Point(300,120), 300, 1000);
+    Section section6 = new Section(new Point(300, 120), new Point(600,120), 300, 1000);
+    Section section7 = new Section(new Point(600, 120), new Point(700,220), 300, 1000);
+    Section section8 = new Section(new Point(700,220), new Point(700,220), 0,0);
     // to samo co section 4
 
     LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section5, section6, section7));
@@ -132,7 +132,7 @@ public class Radar extends JPanel implements Runnable{
                 double newVelocity = random.nextDouble(10);
                 double newAltitude = random.nextDouble(10);
                 int newDirection = random.nextInt(2);
-                Section newSection = new Section(new Point(newBeginningX, newBeginningY), new Point(newEndingX, newEndingY), newVelocity, newAltitude, newDirection);
+                Section newSection = new Section(new Point(newBeginningX, newBeginningY), new Point(newEndingX, newEndingY), newVelocity, newAltitude);
                 sections.add(newSection);
             }
             Route newRoute = new Route(sections);

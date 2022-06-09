@@ -12,8 +12,8 @@ public class Route {
 
     public void addSection(Point destination, double velocity, double altitude) {
         Section lastSection = sections.get(sections.size()-1);
-        int lastSectionDirection = lastSection.getDirection();
-        sections.add(new Section(lastSection.getEnd(), destination, velocity, altitude, lastSectionDirection));
+        //int lastSectionDirection = lastSection.getDirection();
+        sections.add(new Section(lastSection.getEnd(), destination, velocity, altitude));
     }
 
     public void deleteSection() {
