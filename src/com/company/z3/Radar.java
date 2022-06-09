@@ -41,9 +41,9 @@ public class Radar extends JPanel implements Runnable{
     MyRectangle myRectangle1 = new MyRectangle(new Point(50,60), 20,20); // stworzone do testow
     MyRectangle myRectangle2 = new MyRectangle(new Point(100,100), 20,20); // stworzone do testow
     Plane plane1 = new Plane(r1, myRectangle1);
-    Plane plane2 = new Plane(r2, myRectangle2);
+    Balloon balloon = new Balloon(r2, myRectangle2);
 
-    ArrayList<Airship> arrships = new ArrayList<>(Arrays.asList(plane1, plane2)); //lista do testow
+    ArrayList<Airship> arrships = new ArrayList<>(Arrays.asList(plane1, balloon)); //lista do testow
 
 
     Thread gameThread;
@@ -258,9 +258,10 @@ public class Radar extends JPanel implements Runnable{
         //plane1.draw(g);
 
         for(Airship airship : arrships) {
-            if(airship instanceof Plane) {  //sprawdzam typ zeby rysowalo w danych kolorach np. plane - czarny
-                ((Plane) airship).draw(g);
-            }
+//            if(airship instanceof Plane) {  //sprawdzam typ zeby rysowalo w danych kolorach np. plane - czarny
+//                ((Plane) airship).draw(g);
+//            }
+            airship.draw(g);
             for(Section section : airship.getRoute().getSections()) {
                 section.draw(g);
             }
