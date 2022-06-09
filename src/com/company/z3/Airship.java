@@ -19,6 +19,8 @@ public abstract class Airship extends Rectangle {
 
     public void modifyRoute(Route newRoute){
         this.route = newRoute;
+        Point beginning = newRoute.getCurrentSection().beginning;
+        collisionZone.setLocation(beginning);
     }
 
     public boolean ifCollision(Airship airship){

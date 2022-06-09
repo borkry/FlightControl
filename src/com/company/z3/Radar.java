@@ -17,6 +17,7 @@ public class Radar extends JPanel implements Runnable{
     Image image;
     Graphics graphics;
     Menu menu;
+    boolean is_running = false;
     Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 200);
     Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 200);
     Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 200);
@@ -50,6 +51,11 @@ public class Radar extends JPanel implements Runnable{
     public Radar(){
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public void start() {
+        is_running = true;
+
     }
 
     public void addMenu(Menu menu) {
@@ -89,25 +95,18 @@ public class Radar extends JPanel implements Runnable{
             delta += (now - lastTime) / ns;
             lastTime = now;
             if(delta >= 1) {
-                move();
-                //checkCollision();
-                repaint();
+                if(is_running) {
+                    move();
+                    //checkCollision();
+                    repaint();
+                }
                 delta--;
             }
         }
     }
 
-    public void addAirship(Plane plane){
-        airships.add(plane);
-    }
-    public void addAirship(Helicopter helicopter){
-        airships.add(helicopter);
-    }
-    public void addAirship(Glider glider){
-        airships.add(glider);
-    }
-    public void addAirship(Balloon balloon){
-        airships.add(balloon);
+    public void addAirship(Airship plane){
+        arrships.add(plane);
     }
 
     public void removeAirship(int airshipId){
@@ -130,34 +129,37 @@ public class Radar extends JPanel implements Runnable{
             Point newPoint = new Point(newAirshipX, newAirshipY);
             MyRectangle newMyRectangle = new MyRectangle(newPoint, newAirshipWidth, newAirshipHeight);
 
-            int numberOfSections = random.nextInt(5);
+            int numberOfSections = random.nextInt(5) + 1;
             LinkedList<Section> sections = new LinkedList<Section>();
             for(int j=0;j<numberOfSections;j++){//pętla do losowania i tworzenia trasy
-                int newBeginningX = random.nextInt(100);
+                int newBeginningX = random.nextInt(1000);
                 int newBeginningY = random.nextInt(100);
-                int newEndingX = random.nextInt(100);
-                int newEndingY = random.nextInt(100);
-                double newVelocity = random.nextDouble(10);
-                double newAltitude = random.nextDouble(10);
+                int newEndingX = random.nextInt(1000);
+                int newEndingY = random.nextInt(600);
+                double newVelocity = random.nextDouble() * 1000 + 100;
+                double newAltitude = random.nextDouble() * 10000 + 1000;
                 int newDirection = random.nextInt(2);
                 Section newSection = new Section(new Point(newBeginningX, newBeginningY), new Point(newEndingX, newEndingY), newVelocity, newAltitude);
                 sections.add(newSection);
             }
             Route newRoute = new Route(sections);
+            Airship ship = null;
             switch(newAirshipType){
+
                 case 0:
-                    Balloon balloon = new Balloon(newRoute, newMyRectangle);
+                    ship = new Balloon(newRoute, newMyRectangle);
                     break;
                 case 1:
-                    Glider glider = new Glider(newRoute, newMyRectangle);
+                    ship = new Glider(newRoute, newMyRectangle);
                     break;
                 case 2:
-                    Helicopter helicopter = new Helicopter(newRoute, newMyRectangle);
+                    ship= new Helicopter(newRoute, newMyRectangle);
                     break;
                 case 3:
-                    Plane plane = new Plane(newRoute, newMyRectangle);
+                    ship = new Plane(newRoute, newMyRectangle);
                     break;
             }
+            addAirship(ship);
         }
     }
 
@@ -232,12 +234,11 @@ public class Radar extends JPanel implements Runnable{
         if (arrships.size()>0) {
             for (Airship airship : arrships) { //do testow
                 airship.move(airship.getRoute().getCurrentSection());
-                if (airship.getReachedDestination()) {
-                    arrships.remove(airship);
-                    menu.showAirshipList();
-                }
-                if (arrships.size() == 0)
-                    break;
+            }
+            arrships.removeIf(Airship::getReachedDestination);
+            this.menu.showAirshipList();
+            if(arrships.size() == 0){
+                is_running = false;
             }
         }
     }

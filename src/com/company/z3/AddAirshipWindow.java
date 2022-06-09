@@ -14,10 +14,20 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
     JRadioButton rbPlane, rbHeli, rbGlider, rbBallon;
     JButton addDestination, addAirship, setStart;
     JTextField enterX1, enterY1, enterX2, enterY2, enterAltitude, enterVelocity;
+    JLabel hint;
+    Route newRoute;
+    Point startingPoint;
+    Point actualPoint;
+    Radar radar;
+    Menu menu;
+    Integer id;
 
-    AddAirshipWindow(){
+    AddAirshipWindow(Radar radar, Menu menu, Integer id){
+        this.radar = radar;
+        this.menu = menu;
+        this.id = id;
         //label.setFont(new Font(null,Font.PLAIN,25));      na potem
-
+        newRoute = new Route(new LinkedList<Section>());
         JLabel lChoose = new JLabel("Wybierz typ statku:");
         ButtonGroup bgChoose = new ButtonGroup();
         rbPlane = new JRadioButton("Samolot", true);
@@ -49,7 +59,7 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         JLabel lDestinationVelocity = new JLabel("Wysokość:");
         enterVelocity = new JTextField(4);
             addDestination = new JButton("Dodaj cel");
-        JLabel hint = new JLabel("Możesz wskazać kilka kolejnych celów przed zatwierdzeniem trasy.");
+        hint = new JLabel("Możesz wskazać kilka kolejnych celów przed zatwierdzeniem trasy.");
             addAirship = new JButton("Zatwierdź trasę");
 
         lChoose.setBounds(5,0,300,30);
@@ -110,7 +120,11 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         addAirshipFrame.add(hint);
         addAirshipFrame.add(addAirship);
 
-        addAirshipFrame.setTitle("Dodawanie samolotu");
+        if(id == null) {
+            addAirshipFrame.setTitle("Dodawanie samolotu");
+        } else {
+            addAirshipFrame.setTitle("Modyfikowanie samolotu");
+        }
         addAirshipFrame.setSize(500,300);
         addAirshipFrame.setLayout(null);
         addAirshipFrame.setLocationRelativeTo(null);
@@ -126,78 +140,80 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         addDestination.addActionListener((this));
         enterVelocity.addActionListener(this);
         enterAltitude.addActionListener(this);
+
+
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        double startX=0, startY=0;
-        ArrayList<Double> destinationX = new ArrayList<>();
-        ArrayList<Double> destinationY = new ArrayList<>();
-        ArrayList<Double> altitude = new ArrayList<>();
-        ArrayList<Double> velocity = new ArrayList<>();
         MyRectangle newRectangle;
 
         boolean checkpoint1=false, checkpoint2=false;
         Point startPoint = new Point(0,0), destinationPoint = new Point(0,0);
-        Section newSection;
-        LinkedList<Section> sections = new LinkedList<>();
-        Route newRoute;
-
 
         if(e.getSource()==setStart) {
+            double startX=0, startY=0;
             startX = parseDouble(enterX1.getText());
             startY = parseDouble(enterY1.getText());
             enterX1.setText("");
             enterY1.setText("");
-            checkpoint1 = true;
+            startingPoint = new Point(startX, startY);
+            actualPoint = startingPoint;
         }
+
         if(e.getSource()==addDestination) {
-            destinationX.add(parseDouble(enterX2.getText()));
-            destinationY.add(parseDouble(enterY2.getText()));
-            altitude.add(parseDouble(enterY2.getText()));
-            velocity.add(parseDouble(enterY2.getText()));
-            enterX2.setText("");
-            enterY2.setText("");
-            enterAltitude.setText("");
-            enterVelocity.setText("");
-            checkpoint2 = true;
+            if(actualPoint != null) {
+                double x = parseDouble(enterX2.getText());
+                double y = parseDouble(enterY2.getText());
+                Point endpoint = new Point(x,y);
+                double altitude = parseDouble(enterY2.getText());
+                double velocity = parseDouble(enterY2.getText());
+                Section newSection = new Section(actualPoint, endpoint, velocity, altitude);
+                enterX2.setText("");
+                enterY2.setText("");
+                enterAltitude.setText("");
+                enterVelocity.setText("");
+                newRoute.addSection(newSection);
+                actualPoint = endpoint;
+            } else {
+                hint.setText("Podaj punkt początkowy");
+                hint.setVisible(true);
+            }
         }
+
         if(e.getSource()==addAirship) {
-            if (checkpoint1 && checkpoint2) {
-                startPoint = new Point(startX, startY);
-                destinationPoint = new Point(destinationX.get(0).doubleValue(), destinationY.get(0).doubleValue());
-                newSection = new Section(startPoint, destinationPoint, velocity.get(0).doubleValue(), altitude.get(0).doubleValue());
-                sections.add(newSection);
-
-                for (int i = 1; i < destinationX.size(); i++) {
-                    startPoint = destinationPoint;
-                    destinationPoint = new Point(destinationX.get(i).doubleValue(), destinationY.get(i).doubleValue());
-                    newSection = new Section(startPoint, destinationPoint, velocity.get(i).doubleValue(), altitude.get(i).doubleValue());
-                    sections.add(newSection);
-                }
-
-                newRoute = new Route(sections);
-
+            Airship newAirship = null;
+            if(id == null) {
                 if (rbBallon.isSelected()) {
-                    newRectangle = new MyRectangle(startPoint, 20, 20);
-                    Balloon newBallon = new Balloon(newRoute, newRectangle);
+                    newRectangle = new MyRectangle(startingPoint, 20, 20);
+                    newAirship = new Balloon(newRoute, newRectangle);
                 }
                 if (rbHeli.isSelected()) {
-                    newRectangle = new MyRectangle(startPoint, 50, 50);
-                    Helicopter newHelicopter = new Helicopter(newRoute, newRectangle);
+                    newRectangle = new MyRectangle(startingPoint, 50, 50);
+                    newAirship = new Helicopter(newRoute, newRectangle);
                 }
                 if (rbGlider.isSelected()) {
-                    newRectangle = new MyRectangle(startPoint, 40, 20);
-                    Glider newGlider = new Glider(newRoute, newRectangle);
+                    newRectangle = new MyRectangle(startingPoint, 40, 20);
+                    newAirship = new Glider(newRoute, newRectangle);
                 }
                 if (rbPlane.isSelected()) {
-                    newRectangle = new MyRectangle(startPoint, 70, 70);
-                    Plane newPlane = new Plane(newRoute, newRectangle);
+                    newRectangle = new MyRectangle(startingPoint, 70, 70);
+                    newAirship = new Plane(newRoute, newRectangle);
                 }
-                addAirshipFrame.dispose();
+                this.radar.addAirship(newAirship);
+                this.menu.addAirshipToList(newAirship);
+            } else {
+                ArrayList<Airship> airships = this.radar.getAirships();
+                for(Airship airship : airships){
+                    if(airship.getId() == id){
+                        airship.modifyRoute(newRoute);
+                    }
+                }
             }
+            this.radar.repaint();
+            addAirshipFrame.dispose();
         }
     }
 }

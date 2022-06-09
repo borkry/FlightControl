@@ -16,6 +16,10 @@ public class Route {
         sections.add(new Section(lastSection.getEnd(), destination, velocity, altitude));
     }
 
+    public void addSection(Section newSection) {
+        sections.add(newSection);
+    }
+
     public void deleteSection() {
         if(sections.size()>0) {
             sections.remove(sections.size()-1);
