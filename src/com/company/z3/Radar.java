@@ -16,6 +16,7 @@ public class Radar extends JPanel implements Runnable{
     private ArrayList<GroundObject> groundObjects;
     Image image;
     Graphics graphics;
+    Menu menu;
     Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 200);
     Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 200);
     Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 200);
@@ -49,6 +50,10 @@ public class Radar extends JPanel implements Runnable{
     public Radar(){
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public void addMenu(Menu menu) {
+        this.menu = menu;
     }
 
     public ArrayList<Airship> getAirships() {
@@ -229,6 +234,7 @@ public class Radar extends JPanel implements Runnable{
                 airship.move(airship.getRoute().getCurrentSection());
                 if (airship.getReachedDestination()) {
                     arrships.remove(airship);
+                    menu.showAirshipList();
                 }
                 if (arrships.size() == 0)
                     break;

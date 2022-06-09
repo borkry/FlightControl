@@ -16,6 +16,7 @@ public class Frame extends JFrame {
 
         radar = new Radar();
         menu = new Menu(radar);
+        radar.addMenu(menu);
         Button button1 = new Button("Button 1");
         radar.add(button1);
         radar.setBackground(Color.red);

@@ -63,7 +63,9 @@ public class Menu extends JPanel implements ActionListener{
 */
 
 
+
     public void showAirshipList() {
+        mylist.clear();
         airships = radar.getAirships();
         for(Airship airship : airships) {
             mylist.addElement(String.valueOf(airship.getId()));
