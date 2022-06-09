@@ -15,12 +15,12 @@ public class Frame extends JFrame {
         this.setLayout(new BorderLayout(0,0));
 
         radar = new Radar();
-        menu = new Menu();
+        menu = new Menu(radar);
         Button button1 = new Button("Button 1");
         radar.add(button1);
         radar.setBackground(Color.red);
         radar.loadMap("D:\\FlightControl\\src\\com\\company\\z3\\map.txt"); //UWAGA tutaj przekopiowac sciezke do mapy na swoim kompie
-        menu.showAirshipList(radar.getAirships());
+        menu.showAirshipList();
 
 
 

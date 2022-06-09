@@ -105,9 +105,12 @@ public class Radar extends JPanel implements Runnable{
         airships.add(balloon);
     }
 
-    public void deleteAirship(int airshipId){
-        if(airships.size()>0) {
-            airships.remove(airships.size()-1);
+    public void removeAirship(int airshipId){
+        for(int i=0; i<arrships.size();i++) {
+            if(arrships.get(i).getId() == airshipId) {
+                arrships.remove(i);
+                break;
+            }
         }
     }
 
@@ -224,8 +227,9 @@ public class Radar extends JPanel implements Runnable{
         if (arrships.size()>0) {
             for (Airship airship : arrships) { //do testow
                 airship.move(airship.getRoute().getCurrentSection());
-                if (airship.getReachedDestination())
+                if (airship.getReachedDestination()) {
                     arrships.remove(airship);
+                }
                 if (arrships.size() == 0)
                     break;
             }
