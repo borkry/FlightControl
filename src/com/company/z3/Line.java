@@ -20,6 +20,7 @@ public class Line {
     }
 
     public void draw(Graphics g){
+        g.setColor(Color.black);
         g.drawLine((int)beginning.getX(), (int)beginning.getY(), (int)end.getX(), (int)end.getY());
     }
 }

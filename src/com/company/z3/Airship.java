@@ -71,9 +71,20 @@ public abstract class Airship extends Rectangle {
 
     }
 
-    /*public void draw(Graphics g){
+    public void draw(Graphics g){
+        if(this instanceof Plane)
+            g.setColor(Color.black);
+        else if(this instanceof Balloon)
+            g.setColor(Color.blue);
+        else if(this instanceof Helicopter)
+            g.setColor(Color.green);
+        else if(this instanceof Glider)
+            g.setColor(Color.magenta);
 
-    }*/
+        g.drawRect((int)collisionZone.getLocation().getX(),(int)collisionZone.getLocation().getY(), (int)collisionZone.getHeight(), (int)collisionZone.getHeight());
+        g.setColor(Color.black);
+        g.drawString(Integer.toString(id), (int) collisionZone.getLocation().getX()-1, (int) collisionZone.getLocation().getY()-1); // wyswietlanie id nad statkiem na radarze
+    }
 
     /*
     public int getCounter(){
