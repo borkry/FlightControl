@@ -6,6 +6,13 @@ Filip Borowy -
 - Wygląd interfejsu
 
 Krystian Borys -
+- Wczytywanie mapy obiektów nieruchomych,
+- Wyświetlanie mapy obiektów nieruchomych,
+- System kolizji,
+- Wyjątki
 
-
-Robert Rutkowski - 
+Robert Rutkowski -
+- Reprezentacja graficzna obiektów,
+- Ruch samolotów po trasach na radarze,
+- Wyświetlanie listy samolotów i jej obsługa,
+- Usuwanie samolotów
