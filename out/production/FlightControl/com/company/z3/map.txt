@@ -3,7 +3,7 @@ GroundObject
 300
 30
 60
-70
+5
 GroundObject
 40
 500
