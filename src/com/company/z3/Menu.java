@@ -43,6 +43,7 @@ public class Menu extends JPanel implements ActionListener{
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(list);
         list.setLayoutOrientation(JList.VERTICAL);
+        list.setFixedCellWidth(50);
         this.add(scrollPane);
 
 

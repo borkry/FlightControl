@@ -18,9 +18,9 @@ public class Radar extends JPanel implements Runnable{
     Graphics graphics;
     Menu menu;
     boolean is_running = false;
-    Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 200);
-    Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 200);
-    Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 200);
+    Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 5);
+    Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 5);
+    Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 5);
 
 
     Section section4 = new Section(new Point(200, 200), new Point(200,200), 0,0);
@@ -29,17 +29,16 @@ public class Radar extends JPanel implements Runnable{
     LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3));
     Route r1 = new Route(s1);
 
-    Section section5 = new Section(new Point(100, 100), new Point(300,120), 300, 1000);
-    Section section6 = new Section(new Point(300, 120), new Point(600,120), 300, 1000);
-    Section section7 = new Section(new Point(600, 120), new Point(700,220), 300, 1000);
-    Section section8 = new Section(new Point(700,220), new Point(700,220), 0,0);
+    Section section5 = new Section(new Point(150, 90), new Point(200,10), 300, 5);
+    Section section6 = new Section(new Point(200, 10), new Point(320,400), 300, 5);
+    Section section7 = new Section(new Point(320, 400), new Point(600,200), 300, 5);
     // to samo co section 4
 
     LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section5, section6, section7));
     Route r2 = new Route(s2);
 
     MyRectangle myRectangle1 = new MyRectangle(new Point(50,60), 20,20); // stworzone do testow
-    MyRectangle myRectangle2 = new MyRectangle(new Point(100,100), 20,20); // stworzone do testow
+    MyRectangle myRectangle2 = new MyRectangle(new Point(150,90), 20,20); // stworzone do testow
     Plane plane1 = new Plane(r1, myRectangle1);
     Balloon balloon = new Balloon(r2, myRectangle2);
 
@@ -97,7 +96,7 @@ public class Radar extends JPanel implements Runnable{
             if(delta >= 1) {
                 if(is_running) {
                     move();
-                    //checkCollision();
+                    checkCollision();
                     repaint();
                 }
                 delta--;
@@ -171,58 +170,44 @@ public class Radar extends JPanel implements Runnable{
         }
     }
 
-  /*  public void checkAirshipsCollisionsWithGroundObjects(){ //sprawdzenie kolizji statków z obiektami naziemnymi
-        for(Airship airship : airships){
+    public void checkAirshipsCollisionsWithGroundObjects(){ //sprawdzenie kolizji statków z obiektami naziemnymi
+        for(Airship airship : arrships){
             for(GroundObject groundObject : groundObjects){
-                if(airship.collisionZone == groundObject.collisionZone){ //jest kolizja samolotu z obiektem naziemnym
-                    airship.ifCollision(airship);
+                if(airship.ifCollision(groundObject)) {
+                    airship.setIsCollision(true);
                 }
-                /*else if(odległość między nimi < pewnej wartośći){
-                    jest zagrożenie kolizją, zmienia się kolor samolotu
-                }
-                else{
-                    nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
+                if(airship.ifCloseCollision(groundObject)) {
+                    airship.setIsCloseCollision(true);
                 }
 
             }
         }
     }
-    /*public void checkAirshipsCollisionsWithAirships(){ //sprawdzenie kolizji między statkami
+
+    public void checkAirshipsCollisionsWithAirships() { //sprawdzenie kolizji między statkami
         int j;
-        for(int i=0; i<airships.size();++i){//samoloty w liście przed samolotem i
-            for(j=0;j<i;++j){
-                if(airships.get(i).collisionZone == airships.get(j).collisionZone){ //jest kolizja między samolotami
-                    airships.get(i).ifCollision(airships.get(i));
-                    airships.get(j).ifCollision(airships.get(j));
-                }
-                /*else if(odległość między nimi < pewnej wartośći){
-                    jest zagrożenie kolizją, zmieniają się kolory samolotów
-                }
-                else{
-                    nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
+        for (int i = 0; i < arrships.size(); ++i) {//samoloty w liście przed samolotem i
+            for (j = 0; j < i; ++j) {
+
+                if (arrships.get(i).ifCloseCollision(arrships.get(j))) {
+                    arrships.get(i).setIsCloseCollision(true);
+                    arrships.get(j).setIsCloseCollision(true);
                 }
 
-
-
-            }
-            for(++j;j<airships.size();++j){ //samoloty w liście po samolocie i
-                if(airships.get(i).collisionZone == airships.get(j).collisionZone){ //jest kolizja między samolotami
-                    airships.get(i).ifCollision(airships.get(i));
-                    airships.get(j).ifCollision(airships.get(j));
-                }
-                /*else if(odległość między nimi < pewnej wartośći){
-                    jest zagrożenie kolizją, zmieniają się kolory samolotów
-                }
-                else{
-                    nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
+                if (arrships.get(i).ifCollision(arrships.get(j))) {
+                    System.out.println("Kolizja");
+                    arrships.get(i).setIsCollision(true);
+                    arrships.get(j).setIsCollision(true);
+                    //arrships.get(i).drawCollision(graphics);
                 }
 
             }
         }
-    } */
+    }
+
     public void checkCollision(){
-        //checkAirshipsCollisionsWithGroundObjects();
-        //checkAirshipsCollisionsWithAirships();
+        checkAirshipsCollisionsWithGroundObjects();
+        checkAirshipsCollisionsWithAirships();
 
     }
 
@@ -235,8 +220,8 @@ public class Radar extends JPanel implements Runnable{
             for (Airship airship : arrships) { //do testow
                 airship.move(airship.getRoute().getCurrentSection());
             }
-            arrships.removeIf(Airship::getReachedDestination);
-            this.menu.showAirshipList();
+            if(arrships.removeIf(Airship::getReachedDestination))
+                this.menu.showAirshipList();
             if(arrships.size() == 0){
                 is_running = false;
             }
@@ -247,6 +232,8 @@ public class Radar extends JPanel implements Runnable{
         image = createImage(1200, 700);
         graphics = image.getGraphics();
         draw(graphics);
+        Airship airship;
+        drawCollision(graphics);
         g.drawImage(image, 0, 0, this); // To ogólny obraz radaru jakby
     }
 
@@ -267,7 +254,9 @@ public class Radar extends JPanel implements Runnable{
             }
         }
 
+    }
 
+    public void drawCollision(Graphics g) {
 
     }
 }

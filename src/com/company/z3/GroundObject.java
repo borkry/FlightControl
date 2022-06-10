@@ -11,6 +11,10 @@ public class GroundObject extends Rectangle{
         this.heightOfGroundObject = heightOfGroundObject;
     }
 
+    public double getHeightOfGroundObject() {
+        return heightOfGroundObject;
+    }
+
     public MyRectangle getCollisionZone(){
         return collisionZone;
     }
