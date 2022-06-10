@@ -198,6 +198,19 @@ public class Radar extends JPanel implements Runnable{
                 }
 
             }
+            for(++j;j<arrships.size();++j){ //samoloty w liście po samolotem i
+
+                if (arrships.get(i).ifCloseCollision(arrships.get(j))) {
+                    arrships.get(i).setIsCloseCollision(true);
+                    arrships.get(j).setIsCloseCollision(true);
+                }
+
+                if (arrships.get(i).ifCollision(arrships.get(j))) {
+                    arrships.get(i).setIsCollision(true);
+                    arrships.get(j).setIsCollision(true);
+                }
+
+            }
         }
     }
 
