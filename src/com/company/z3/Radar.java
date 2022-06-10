@@ -115,51 +115,6 @@ public class Radar extends JPanel implements Runnable{
 
     }
 
-    public void drawAirship(int amount){                        //losowanie nowych samolotów
-        Random random = new Random();
-        for(int i=0;i<amount;i++){                              //pętla do losowania i tworzenia samolotu
-            int newAirshipType = random.nextInt(4);
-            int newAirshipX = random.nextInt(100);
-            int newAirshipY = random.nextInt(100);
-            int newAirshipWidth = random.nextInt(50);
-            int newAirshipHeight = newAirshipWidth;                     //kwadrat
-            Point newPoint = new Point(newAirshipX, newAirshipY);
-            MyRectangle newMyRectangle = new MyRectangle(newPoint, newAirshipWidth, newAirshipHeight);
-
-            int numberOfSections = random.nextInt(5) + 1;
-            LinkedList<Section> sections = new LinkedList<Section>();
-            for(int j=0;j<numberOfSections;j++){                    //pętla do losowania i tworzenia trasy
-                int newBeginningX = random.nextInt(1000);
-                int newBeginningY = random.nextInt(100);
-                int newEndingX = random.nextInt(1000);
-                int newEndingY = random.nextInt(600);
-                double newVelocity = random.nextDouble() * 1000 + 100;
-                double newAltitude = random.nextDouble() * 10000 + 1000;
-                int newDirection = random.nextInt(2);
-                Section newSection = new Section(new Point(newBeginningX, newBeginningY), new Point(newEndingX, newEndingY), newVelocity, newAltitude);
-                sections.add(newSection);
-            }
-            Route newRoute = new Route(sections);
-            Airship ship = null;
-            switch(newAirshipType){
-
-                case 0:
-                    ship = new Balloon(newRoute, newMyRectangle);
-                    break;
-                case 1:
-                    ship = new Glider(newRoute, newMyRectangle);
-                    break;
-                case 2:
-                    ship= new Helicopter(newRoute, newMyRectangle);
-                    break;
-                case 3:
-                    ship = new Plane(newRoute, newMyRectangle);
-                    break;
-            }
-            addAirship(ship);
-        }
-    }
-
     public void modifyRoute(int airshipId, Route newRoute){ //chyba trzeba przeszukać listę samolotów i ten, którego id=airshipId zmieniamy trase
         for(Airship airship : airships){
             if(airship.getId()==airshipId){
