@@ -13,18 +13,15 @@ public class Frame extends JFrame {
     public Frame() throws IOException {
         this.setPreferredSize(new Dimension(1200, 700));
         this.setLayout(new BorderLayout(0,0));
+        Color grey = new Color(98, 105, 93);
+        this.setBackground(grey);
 
         radar = new Radar();
         menu = new Menu(radar);
         radar.addMenu(menu);
-        Button button1 = new Button("Button 1");
-        radar.add(button1);
-        radar.setBackground(Color.red);
+
         radar.loadMap("D:\\FlightControl\\src\\com\\company\\z3\\map.txt"); //UWAGA tutaj przekopiowac sciezke do mapy na swoim kompie
         menu.showAirshipList();
-
-
-
 
         this.add(radar, BorderLayout.CENTER);
         this.add(menu, BorderLayout.SOUTH);
