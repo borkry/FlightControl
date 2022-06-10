@@ -8,7 +8,7 @@ public class GroundObject extends Rectangle{
 
     public GroundObject(MyRectangle myRectangle, double heightOfGroundObject){
         this.collisionZone = myRectangle;
-        this.heightOfGroundObject = heightOfGroundObject;
+        this.heightOfGroundObject = heightOfGroundObject;                       // wysokosc "fizyczna" jakiegos obiektu nieruchomego
     }
 
     public double getHeightOfGroundObject() {

@@ -23,9 +23,6 @@ public class Radar extends JPanel implements Runnable{
     Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 5);
 
 
-    Section section4 = new Section(new Point(200, 200), new Point(200,200), 0,0);
-    //teraz ten odcinek jest ostatni na liscie i nie jest usuwany, w funkcji trzeba bedzie dodawac go automatycznie bez wiedzy usera dajac mu wspolrzedne ostatniego polozenia samolotu, dzieki temu mozna usunac fakttyczny ostatni odcinek bez crasha programu. Mysle ze mozemy nie usuwac samolotu, on sobie wyladowal i stoi na ziemi tamu ma zerowa predkosc i wysokosc:P
-
     LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3));
     Route r1 = new Route(s1);
 
@@ -65,7 +62,7 @@ public class Radar extends JPanel implements Runnable{
         return arrships;
     }
 
-    public void loadMap(String fileName) throws IOException{ /// w pliku każa linijka wygląda tak: GroundObject x y width height
+    public void loadMap(String fileName) throws IOException{                    // w pliku każa linijka wygląda tak: GroundObject x y width height goHeight
         Path path = Paths.get(fileName);
         List<String> lines = Files.readAllLines(path);
         groundObjects = new ArrayList<GroundObject>(lines.size()/6);
@@ -74,8 +71,8 @@ public class Radar extends JPanel implements Runnable{
                 int groundObjectX = Integer.parseInt(lines.get(i+1));
                 int groundObjectY = Integer.parseInt(lines.get(i+2));
                 int groundObjectWidth = Integer.parseInt(lines.get(i+3));
-                int groundObjectHeight = Integer.parseInt(lines.get(i+4));  // wspolrzedna prostokata do narysowania na mapie
-                int heightOfGroundObject = Integer.parseInt(lines.get(i+5)); // fizyczna wysokosc obiektu nieruchomego
+                int groundObjectHeight = Integer.parseInt(lines.get(i+4));                              // wspolrzedna prostokata do narysowania na mapie
+                int heightOfGroundObject = Integer.parseInt(lines.get(i+5));                            // fizyczna wysokosc obiektu nieruchomego
                 Point newPoint = new Point(groundObjectX, groundObjectY);
                 MyRectangle newMyRectangle = new MyRectangle(newPoint, groundObjectWidth, groundObjectHeight);
                 groundObjects.add(new GroundObject(newMyRectangle, heightOfGroundObject));
@@ -108,29 +105,30 @@ public class Radar extends JPanel implements Runnable{
         arrships.add(plane);
     }
 
-    public void removeAirship(int airshipId){
+    public void removeAirship(int airshipId) {
         for(int i=0; i<arrships.size();i++) {
             if(arrships.get(i).getId() == airshipId) {
                 arrships.remove(i);
                 break;
             }
         }
+
     }
 
-    public void drawAirship(int amount){ //losowanie nowych samolotów
+    public void drawAirship(int amount){                        //losowanie nowych samolotów
         Random random = new Random();
-        for(int i=0;i<amount;i++){//pętla do losowania i tworzenia samolotu
+        for(int i=0;i<amount;i++){                              //pętla do losowania i tworzenia samolotu
             int newAirshipType = random.nextInt(4);
             int newAirshipX = random.nextInt(100);
             int newAirshipY = random.nextInt(100);
             int newAirshipWidth = random.nextInt(50);
-            int newAirshipHeight = newAirshipWidth;//kwadrat
+            int newAirshipHeight = newAirshipWidth;                     //kwadrat
             Point newPoint = new Point(newAirshipX, newAirshipY);
             MyRectangle newMyRectangle = new MyRectangle(newPoint, newAirshipWidth, newAirshipHeight);
 
             int numberOfSections = random.nextInt(5) + 1;
             LinkedList<Section> sections = new LinkedList<Section>();
-            for(int j=0;j<numberOfSections;j++){//pętla do losowania i tworzenia trasy
+            for(int j=0;j<numberOfSections;j++){                    //pętla do losowania i tworzenia trasy
                 int newBeginningX = random.nextInt(1000);
                 int newBeginningY = random.nextInt(100);
                 int newEndingX = random.nextInt(1000);
@@ -195,10 +193,8 @@ public class Radar extends JPanel implements Runnable{
                 }
 
                 if (arrships.get(i).ifCollision(arrships.get(j))) {
-                    System.out.println("Kolizja");
                     arrships.get(i).setIsCollision(true);
                     arrships.get(j).setIsCollision(true);
-                    //arrships.get(i).drawCollision(graphics);
                 }
 
             }
@@ -232,23 +228,15 @@ public class Radar extends JPanel implements Runnable{
         image = createImage(1200, 700);
         graphics = image.getGraphics();
         draw(graphics);
-        Airship airship;
-        drawCollision(graphics);
         g.drawImage(image, 0, 0, this); // To ogólny obraz radaru jakby
     }
 
     public void draw(Graphics g){
-        for(GroundObject go : groundObjects)
+        for(GroundObject go : groundObjects)        // wyswietlanie obiektow nieruchomych na mapie
             go.draw(g);
-//        groundObjects.get(0).draw(g);
-//        groundObjects.get(1).draw(g); //to mozna usunac
-        //plane1.draw(g);
 
         for(Airship airship : arrships) {
-//            if(airship instanceof Plane) {  //sprawdzam typ zeby rysowalo w danych kolorach np. plane - czarny
-//                ((Plane) airship).draw(g);
-//            }
-            airship.draw(g);
+            airship.draw(g);                                                            // wyswietlanie statkow powietrznych oraz ich odcinkow na radarze
             for(Section section : airship.getRoute().getSections()) {
                 section.draw(g);
             }
@@ -256,7 +244,4 @@ public class Radar extends JPanel implements Runnable{
 
     }
 
-    public void drawCollision(Graphics g) {
-
-    }
 }

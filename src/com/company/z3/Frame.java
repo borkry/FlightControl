@@ -20,7 +20,7 @@ public class Frame extends JFrame {
         menu = new Menu(radar);
         radar.addMenu(menu);
 
-        radar.loadMap("D:\\FlightControl\\src\\com\\company\\z3\\map.txt"); //UWAGA tutaj przekopiowac sciezke do mapy na swoim kompie
+        radar.loadMap("D:\\FlightControl\\src\\com\\company\\z3\\map.txt"); // UWAGA tutaj przekopiowac sciezke do mapy na swoim komputerze
         menu.showAirshipList();
 
         this.add(radar, BorderLayout.CENTER);

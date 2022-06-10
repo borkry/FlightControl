@@ -29,15 +29,13 @@ public abstract class Airship extends Rectangle {
         this.isCloseCollision = isCloseCollision;
     }
 
-    public void setIsCollisionWithGroundObject(boolean isCollisionWithGroundObject) {
-        this.isCollisionWithGroundObject = isCollisionWithGroundObject;
-    }
-
     public void modifyRoute(Route newRoute){
         this.route = newRoute;
         Point beginning = newRoute.getCurrentSection().beginning;
         collisionZone.setLocation(beginning);
     }
+
+    // KOLIZJE
 
     public boolean ifCollision(Airship airship){
         double airshipX = airship.collisionZone.getLocation().getX();
@@ -50,7 +48,7 @@ public abstract class Airship extends Rectangle {
         double thisWidth = collisionZone.getWidth();
         double thisHeight = collisionZone.getHeight();
 
-        double difference = Math.abs(route.getCurrentSection().getAltitude() - airship.route.getCurrentSection().getAltitude());
+        double difference = Math.abs(route.getCurrentSection().getAltitude() - airship.route.getCurrentSection().getAltitude());    // sprawdzamy roznice wysokosci
         if(difference > 300) return false;
 
         if ((thisX + thisWidth >= airshipX && thisX + thisWidth <= airshipX + airshipWidth && thisY >= airshipY && thisY <= airshipY + airshipWidth)
@@ -58,7 +56,6 @@ public abstract class Airship extends Rectangle {
                 || (thisX + thisWidth >= airshipX && thisX + thisWidth <= airshipX + airshipWidth && thisY + thisHeight >= airshipY && thisY + thisHeight <= airshipY + airshipHeight)
                 || (thisX <= airshipX + airshipWidth && thisX >= airshipX && thisY + thisHeight >= airshipY && thisY + thisHeight <= airshipY + airshipHeight)
         ) {
-            System.out.println(Math.abs(route.getCurrentSection().getAltitude() - airship.route.getCurrentSection().getAltitude()));
             return true;
         }
         return false;
@@ -76,7 +73,7 @@ public abstract class Airship extends Rectangle {
         double thisWidth = collisionZone.getWidth()+70;
         double thisHeight = collisionZone.getHeight()+70;
 
-        double difference = Math.abs(route.getCurrentSection().getAltitude() - airship.route.getCurrentSection().getAltitude());
+        double difference = Math.abs(route.getCurrentSection().getAltitude() - airship.route.getCurrentSection().getAltitude());    // sprawdzamy roznice wysokosci
         if(difference > 100) return false;
 
         if ((thisX + thisWidth >= airshipX && thisX + thisWidth <= airshipX + airshipWidth && thisY >= airshipY && thisY <= airshipY + airshipWidth)
@@ -84,7 +81,6 @@ public abstract class Airship extends Rectangle {
                 || (thisX + thisWidth >= airshipX && thisX + thisWidth <= airshipX + airshipWidth && thisY + thisHeight >= airshipY && thisY + thisHeight <= airshipY + airshipHeight)
                 || (thisX <= airshipX + airshipWidth && thisX >= airshipX && thisY + thisHeight >= airshipY && thisY + thisHeight <= airshipY + airshipHeight)
         ) {
-            System.out.println(Math.abs(route.getCurrentSection().getAltitude() - airship.route.getCurrentSection().getAltitude()));
             return true;
         }
         return false;
@@ -102,7 +98,7 @@ public abstract class Airship extends Rectangle {
         double thisWidth = collisionZone.getWidth();
         double thisHeight = collisionZone.getHeight();
 
-        double difference = Math.abs(route.getCurrentSection().getAltitude() - groundObject.getHeightOfGroundObject());
+        double difference = Math.abs(route.getCurrentSection().getAltitude() - groundObject.getHeightOfGroundObject());     //sprawdzamy roznice wysokosci
         if(difference > 300) return false;
         if ((thisX + thisWidth >= airshipX && thisX + thisWidth <= airshipX + airshipWidth && thisY >= airshipY && thisY <= airshipY + airshipWidth)
                 || (thisX <= airshipX + airshipWidth && thisX >= airshipX && thisY >= airshipY && thisY <= airshipY + airshipHeight)
@@ -126,7 +122,7 @@ public abstract class Airship extends Rectangle {
         double thisWidth = collisionZone.getWidth()+70;
         double thisHeight = collisionZone.getHeight()+70;
 
-        double difference = Math.abs(route.getCurrentSection().getAltitude() - groundObject.getHeightOfGroundObject());
+        double difference = Math.abs(route.getCurrentSection().getAltitude() - groundObject.getHeightOfGroundObject());     //sprawdzamy roznice wysokosci
         if(difference > 100) return false;
         if ((thisX + thisWidth >= airshipX && thisX + thisWidth <= airshipX + airshipWidth && thisY >= airshipY && thisY <= airshipY + airshipWidth)
                 || (thisX <= airshipX + airshipWidth && thisX >= airshipX && thisY >= airshipY && thisY <= airshipY + airshipHeight)
@@ -140,7 +136,7 @@ public abstract class Airship extends Rectangle {
     }
 
     public void move(Section section){
-        double speed = section.getVelocity()/200;
+        double speed = section.getVelocity()/300;       // ogólny mnożnik prędkości
         double deltaX = section.getEnd().getX() - collisionZone.getLocation().getX();
         double deltaY = section.getEnd().getY() - collisionZone.getLocation().getY();
         double angle = Math.atan2(deltaY, deltaX);
@@ -150,28 +146,15 @@ public abstract class Airship extends Rectangle {
 
         if(Math.sqrt(Math.pow((route.getCurrentSection().end.getX() - collisionZone.getLocation().getX()), 2) + Math.pow((route.getCurrentSection().end.getY() - collisionZone.getLocation().getY()), 2)) < Math.sqrt(Math.pow((collisionZone.getLocation().getX()+moveX - collisionZone.getLocation().getX()), 2) + Math.pow((collisionZone.getLocation().getY()+moveY- collisionZone.getLocation().getY()), 2) )) {
             collisionZone.getLocation().setX(route.getCurrentSection().end.getX());
-            collisionZone.getLocation().setY(route.getCurrentSection().end.getY());
-            if(route.getSections().size()>1)
+            collisionZone.getLocation().setY(route.getCurrentSection().end.getY());         // jezeli przesuniecie ma byc wieksze niz odleglosc do punktu docelowego
+            if(route.getSections().size()>1)                                                // to ustawiamy wspolrzedne statku powietrznego na punkt docelowy
                 route.moveToNextSection();
             else
                 reachedDestination = true;
         }
         else
-            collisionZone.moveRectangle(speed*Math.cos(angle), speed*Math.sin(angle)); //"droga po ktorej sie porusza" - tutaj chyba trzeba dac parametry zeby dla kazdego obiektu mozna bylo dac inna droge, cos jakby funkcje liniowa chyba
+            collisionZone.moveRectangle(speed*Math.cos(angle), speed*Math.sin(angle));      // poruszarnie sie statku powietrznego
 
-     /*   if(Math.abs(collisionZone.getLocation().getX() - section.getEnd().getX()) < 2 && Math.abs(collisionZone.getLocation().getY() - section.getEnd().getY()) < 2) { // tutaj mozna pomyslec czy mozna to zrobic lepiej, ale probowalem i nie dalo rady, bo tak naprawde X samolotu nigdy nie bedzie rowny X celu
-            //System.out.println(route.getCurrentSection().end.getX());
-            if(route.getSections().size()>1)
-                route.moveToNextSection();                                                   // przejscie do kolejnego odcinka
-            //else if(route.getSections().size()<2)
-             //   reachedDestination = true;
-
-            //collisionZone.getLocation().setX(route.getCurrentSection().beginning.getX());
-            //collisionZone.getLocation().setY(route.getCurrentSection().beginning.getY());
-            //System.out.println(route.getCurrentSection().beginning.getX());
-        }
-        else if(route.getSections().size() < 2 && Math.abs(collisionZone.getLocation().getX() - section.getEnd().getX()) < 2 && Math.abs(collisionZone.getLocation().getY() - section.getEnd().getY()) < 2)
-            reachedDestination = true;*/
     }
 
     public void drawRoute(){
@@ -181,12 +164,12 @@ public abstract class Airship extends Rectangle {
     public void draw(Graphics g){
         if(isCollision) {
             g.setColor(Color.red);
-            g.fillRect((int)collisionZone.getLocation().getX(),(int)collisionZone.getLocation().getY(), (int)collisionZone.getHeight(), (int)collisionZone.getHeight());
+            g.fillRect((int)collisionZone.getLocation().getX(),(int)collisionZone.getLocation().getY(), (int)collisionZone.getHeight(), (int)collisionZone.getHeight());    //wypelnienie kolorem czerwonym
             g.setColor(Color.black);
             g.drawString(Integer.toString(id), (int) collisionZone.getLocation().getX()-1, (int) collisionZone.getLocation().getY()-1);
             isCollision = false;
             return;
-        }
+        }                                                                                                                                                // rozny kolor w zaleznosci od rodzaju kolizji
         else if (isCloseCollision) {
             g.setColor(Color.orange);
             g.fillRect((int)collisionZone.getLocation().getX(),(int)collisionZone.getLocation().getY(), (int)collisionZone.getHeight(), (int)collisionZone.getHeight());
@@ -205,9 +188,7 @@ public abstract class Airship extends Rectangle {
         }
 
 
-
-
-        if(this instanceof Plane)
+        if(this instanceof Plane)                   // rozny kolor reprezentacji na radarze dla typow statkow powietrznych
             g.setColor(Color.black);
         else if(this instanceof Balloon)
             g.setColor(Color.blue);
@@ -216,16 +197,12 @@ public abstract class Airship extends Rectangle {
         else if(this instanceof Glider)
             g.setColor(Color.magenta);
 
-        g.drawRect((int)collisionZone.getLocation().getX(),(int)collisionZone.getLocation().getY(), (int)collisionZone.getHeight(), (int)collisionZone.getHeight());
+        g.drawRect((int)collisionZone.getLocation().getX(),(int)collisionZone.getLocation().getY(), (int)collisionZone.getHeight(), (int)collisionZone.getHeight());    // rysowanie prostokata
         g.setColor(Color.black);
         g.drawString(Integer.toString(id), (int) collisionZone.getLocation().getX()-1, (int) collisionZone.getLocation().getY()-1); // wyswietlanie id nad statkiem na radarze
         //g.drawString(String.valueOf((int)(route.getCurrentSection().getAltitude())),(int) collisionZone.getLocation().getX()+25, (int) collisionZone.getLocation().getY()+10 ); // tutaj mozna wlaczyc pokazywanie wysokosci
     }
 
-    public void drawCollision(Graphics g) {
-        g.setColor(Color.red);
-        g.fillRect((int)collisionZone.getLocation().getX(),(int)collisionZone.getLocation().getY(), (int)collisionZone.getHeight(), (int)collisionZone.getHeight());
-    }
 
     public Route getRoute(){
         return route;

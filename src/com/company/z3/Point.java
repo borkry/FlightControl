@@ -9,7 +9,7 @@ public class Point {
         this.y = y;
     }
 
-    public Point(Point p) { //dodane względem diagramu, ponieważ nie dało się stworzyć linii
+    public Point(Point p) {
         x = p.x;
         y = p.y;
     }
@@ -23,7 +23,7 @@ public class Point {
     }
 
     public void setX(double xx){this.x = xx; }
-    public void setY(double yy){this.y = yy; }      // NARAZIE niech bedzie, na koniec zobaczymy
+    public void setY(double yy){this.y = yy; }
 
     public void movePoint(double x, double y) {
         this.x += x;

@@ -12,7 +12,6 @@ public class Route {
 
     public void addSection(Point destination, double velocity, double altitude) {
         Section lastSection = sections.get(sections.size()-1);
-        //int lastSectionDirection = lastSection.getDirection();
         sections.add(new Section(lastSection.getEnd(), destination, velocity, altitude));
     }
 
@@ -28,19 +27,16 @@ public class Route {
 
     public Section getCurrentSection() {
         return sections.get(0);
-    }
+    }                   // zwraca aktualny odcinek
 
     public void moveToNextSection() {
         if(sections.size()>0)
-            sections.remove();
+            sections.remove();                  // kiedy samolot dotrze do celu ktoregos odcinka to wywoluje te metode aby przejsc do nastepnego (usuwamy z kolejki)
     }
 
     public LinkedList<Section> getSections() {
         return sections;
     }
 
-//    public Section getCurrentSection() {
-//        // dokonczyc chyba gdy sie doda samoloty?
-//    }
 
 }

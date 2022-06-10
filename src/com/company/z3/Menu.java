@@ -70,7 +70,7 @@ public class Menu extends JPanel implements ActionListener{
 
 
     public void showAirshipList() {
-        myList.clear();
+        myList.clear();             // czyscimy aby wyswietlic zaktualizowaną listę statkow powietrznych
         airShips = radar.getAirships();
         for(Airship airship : airShips) {
             myList.addElement(String.valueOf(airship.getId()));
@@ -85,7 +85,7 @@ public class Menu extends JPanel implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e){
         if(e.getSource()==bAddAirShip) {
             try {
                 AddAirshipWindow addAirshipWindow = new AddAirshipWindow(this.radar, this, null);
@@ -95,20 +95,26 @@ public class Menu extends JPanel implements ActionListener{
             }
         }
         if(e.getSource()==bModifyAirShip) {
-            int id = Integer.parseInt(String.valueOf(list.getSelectedValue()));
             try {
+                int id = Integer.parseInt(String.valueOf(list.getSelectedValue()));
                 AddAirshipWindow addAirshipWindow = new AddAirshipWindow(this.radar, this, id);
             }
-            catch (InvalidAttributeValueException Ie) {
-                JOptionPane.showMessageDialog(frame, "Wprowadzone dane są niepoprawne.");
+            catch (Exception Ie) {
+                JOptionPane.showMessageDialog(frame, "Nie wybrano żadnego statku!");
             }
         }
         if(e.getSource() == bRemoveAirship) {
-            //dodac wyjatki
-            int id = Integer.parseInt(String.valueOf(list.getSelectedValue()));
-            radar.removeAirship(id);
-            myList.removeElementAt(list.getSelectedIndex());
+            try {
+                int id = Integer.parseInt(String.valueOf(list.getSelectedValue()));
+                radar.removeAirship(id);
+                myList.removeElementAt(list.getSelectedIndex());
+            } catch (Exception ee) {
+                JOptionPane.showMessageDialog(frame, "Nie wybrano żadnego statku!");
+            }
+                                                                                                     // usuwamy dany statek rowniez z listy w klasie Radar
+                                                                                                    // usuwamy statek z graficznej reprezentacji listy
             this.radar.repaint();
+
         }
         if(e.getSource() == bAddRandom) {
 

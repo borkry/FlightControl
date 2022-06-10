@@ -160,13 +160,17 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         Point destinationPoint = new Point(0,0);
 
         if(e.getSource()==setStart) {
-            double startX=0, startY=0;
+           try{
+               double startX=0, startY=0;
             startX = parseDouble(enterX1.getText());
             startY = parseDouble(enterY1.getText());
             enterX1.setText("");
             enterY1.setText("");
             startingPoint = new Point(startX, startY);
             actualPoint = startingPoint;
+           } catch(Exception ee) {
+               JOptionPane.showMessageDialog(menu, "Wprowadzone dane są niepoprawne.");
+            }
         }
 
         if(e.getSource()==addDestination) {
@@ -189,22 +193,23 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         }
 
         if(e.getSource()==addAirship) {
-            Airship newAirship = null;
+            try{
+                Airship newAirship = null;
             if(id == null) {
                 if (rbBallon.isSelected()) {
                     newRectangle = new MyRectangle(startingPoint, 20, 20);
                     newAirship = new Balloon(newRoute, newRectangle);
                 }
                 if (rbHeli.isSelected()) {
-                    newRectangle = new MyRectangle(startingPoint, 30, 45);
+                    newRectangle = new MyRectangle(startingPoint, 20, 20);
                     newAirship = new Helicopter(newRoute, newRectangle);
                 }
                 if (rbGlider.isSelected()) {
-                    newRectangle = new MyRectangle(startingPoint, 40, 20);
+                    newRectangle = new MyRectangle(startingPoint, 20, 20);
                     newAirship = new Glider(newRoute, newRectangle);
                 }
                 if (rbPlane.isSelected()) {
-                    newRectangle = new MyRectangle(startingPoint, 50, 50);
+                    newRectangle = new MyRectangle(startingPoint, 20, 20);
                     newAirship = new Plane(newRoute, newRectangle);
                 }
                 this.radar.addAirship(newAirship);
@@ -219,6 +224,9 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
             }
             this.radar.repaint();
             addAirshipFrame.dispose();
+        } catch (Exception ee) {
+                JOptionPane.showMessageDialog(menu, "Wprowadzone dane są niepoprawne.");
+            }
         }
     }
 }
