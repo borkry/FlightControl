@@ -12,19 +12,17 @@ import java.io.IOException;
 import java.util.List;
 
 public class Radar extends JPanel implements Runnable{
-    private ArrayList<Airship> airships;
+
+    private ArrayList<Airship> airShips;
     private ArrayList<GroundObject> groundObjects;
     Image image;
     Graphics graphics;
     Menu menu;
     boolean is_running = false;
+
     Section section1 = new Section(new Point(50, 60), new Point(100,70), 300, 200);
     Section section2 = new Section(new Point(100, 70), new Point(120,50), 300, 200);
     Section section3 = new Section(new Point(120, 50), new Point(200,200), 300, 200);
-
-
-    Section section4 = new Section(new Point(200, 200), new Point(200,200), 0,0);
-    //teraz ten odcinek jest ostatni na liscie i nie jest usuwany, w funkcji trzeba bedzie dodawac go automatycznie bez wiedzy usera dajac mu wspolrzedne ostatniego polozenia samolotu, dzieki temu mozna usunac fakttyczny ostatni odcinek bez crasha programu. Mysle ze mozemy nie usuwac samolotu, on sobie wyladowal i stoi na ziemi tamu ma zerowa predkosc i wysokosc:P
 
     LinkedList<Section> s1 = new LinkedList<>(Arrays.asList(section1, section2, section3));
     Route r1 = new Route(s1);
@@ -32,8 +30,6 @@ public class Radar extends JPanel implements Runnable{
     Section section5 = new Section(new Point(100, 100), new Point(300,120), 300, 1000);
     Section section6 = new Section(new Point(300, 120), new Point(600,120), 300, 1000);
     Section section7 = new Section(new Point(600, 120), new Point(700,220), 300, 1000);
-    Section section8 = new Section(new Point(700,220), new Point(700,220), 0,0);
-    // to samo co section 4
 
     LinkedList<Section> s2 = new LinkedList<>(Arrays.asList(section5, section6, section7));
     Route r2 = new Route(s2);
@@ -55,7 +51,6 @@ public class Radar extends JPanel implements Runnable{
 
     public void start() {
         is_running = true;
-
     }
 
     public void addMenu(Menu menu) {
@@ -164,62 +159,13 @@ public class Radar extends JPanel implements Runnable{
     }
 
     public void modifyRoute(int airshipId, Route newRoute){ //chyba trzeba przeszukać listę samolotów i ten, którego id=airshipId zmieniamy trase
-        for(Airship airship : airships){
+        for(Airship airship : airShips){
             if(airship.getId()==airshipId){
                 airship.route = newRoute;
             }
         }
     }
 
-  /*  public void checkAirshipsCollisionsWithGroundObjects(){ //sprawdzenie kolizji statków z obiektami naziemnymi
-        for(Airship airship : airships){
-            for(GroundObject groundObject : groundObjects){
-                if(airship.collisionZone == groundObject.collisionZone){ //jest kolizja samolotu z obiektem naziemnym
-                    airship.ifCollision(airship);
-                }
-                /*else if(odległość między nimi < pewnej wartośći){
-                    jest zagrożenie kolizją, zmienia się kolor samolotu
-                }
-                else{
-                    nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
-                }
-
-            }
-        }
-    }
-    /*public void checkAirshipsCollisionsWithAirships(){ //sprawdzenie kolizji między statkami
-        int j;
-        for(int i=0; i<airships.size();++i){//samoloty w liście przed samolotem i
-            for(j=0;j<i;++j){
-                if(airships.get(i).collisionZone == airships.get(j).collisionZone){ //jest kolizja między samolotami
-                    airships.get(i).ifCollision(airships.get(i));
-                    airships.get(j).ifCollision(airships.get(j));
-                }
-                /*else if(odległość między nimi < pewnej wartośći){
-                    jest zagrożenie kolizją, zmieniają się kolory samolotów
-                }
-                else{
-                    nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
-                }
-
-
-
-            }
-            for(++j;j<airships.size();++j){ //samoloty w liście po samolocie i
-                if(airships.get(i).collisionZone == airships.get(j).collisionZone){ //jest kolizja między samolotami
-                    airships.get(i).ifCollision(airships.get(i));
-                    airships.get(j).ifCollision(airships.get(j));
-                }
-                /*else if(odległość między nimi < pewnej wartośći){
-                    jest zagrożenie kolizją, zmieniają się kolory samolotów
-                }
-                else{
-                    nie ma zagrożenia kolizją, w sumie nic się nie dzieje wtedy
-                }
-
-            }
-        }
-    } */
     public void checkCollision(){
         //checkAirshipsCollisionsWithGroundObjects();
         //checkAirshipsCollisionsWithAirships();

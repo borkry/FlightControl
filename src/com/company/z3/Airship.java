@@ -36,10 +36,6 @@ public abstract class Airship extends Rectangle {
         double deltaY = section.getEnd().getY() - collisionZone.getLocation().getY();
         double angle = Math.atan2(deltaY, deltaX);
 
-        //System.out.println(deltaX);
-        //System.out.println(deltaY);
-        //double currentX = collisionZone.getLocation().getX() + 0 * Math.cos(angle);
-        //double currentY = collisionZone.getLocation().getY() + 0 * Math.sin(angle);
         double moveX = speed * Math.cos(angle);
         double moveY = speed * Math.sin(angle);
 
@@ -87,14 +83,6 @@ public abstract class Airship extends Rectangle {
         g.setColor(Color.black);
         g.drawString(Integer.toString(id), (int) collisionZone.getLocation().getX()-1, (int) collisionZone.getLocation().getY()-1); // wyswietlanie id nad statkiem na radarze
     }
-
-    /*
-    public int getCounter(){
-        return counter;
-    }
-    public void incrementCounter(){
-        ++counter;
-    }*/
 
     public Route getRoute(){
         return route;

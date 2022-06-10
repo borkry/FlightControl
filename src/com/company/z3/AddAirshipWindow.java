@@ -1,6 +1,8 @@
 package com.company.z3;
 
+import javax.management.InvalidAttributeValueException;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,12 +24,15 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
     Menu menu;
     Integer id;
 
-    AddAirshipWindow(Radar radar, Menu menu, Integer id){
+
+    public AddAirshipWindow(Radar radar, Menu menu, Integer id) throws InvalidAttributeValueException {
         this.radar = radar;
         this.menu = menu;
         this.id = id;
-        //label.setFont(new Font(null,Font.PLAIN,25));      na potem
+
         newRoute = new Route(new LinkedList<Section>());
+
+
         JLabel lChoose = new JLabel("Wybierz typ statku:");
         ButtonGroup bgChoose = new ButtonGroup();
         rbPlane = new JRadioButton("Samolot", true);
@@ -44,23 +49,23 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
 
         JLabel lStartPosition = new JLabel("Podaj położenie początkowe statku:");
         JLabel lStartX = new JLabel("X:");
-            enterX1 = new JTextField(4);
+        enterX1 = new JTextField(4);
         JLabel lStartY = new JLabel("Y:");
-            enterY1 = new JTextField(4);
-            setStart = new JButton("Zatwierdź");
+        enterY1 = new JTextField(4);
+        setStart = new JButton("Zatwierdź");
 
         JLabel lDestination = new JLabel("Podaj cel statku, wysokość oraz prędkość na trasie:");
         JLabel lDestinationX= new JLabel("X:");
-            enterX2 = new JTextField(4);
+        enterX2 = new JTextField(4);
         JLabel lDestinationY = new JLabel("Y:");
         enterY2 = new JTextField(4);
         JLabel lDestinationAltitude= new JLabel("Prędkość:");
         enterAltitude = new JTextField(4);
         JLabel lDestinationVelocity = new JLabel("Wysokość:");
         enterVelocity = new JTextField(4);
-            addDestination = new JButton("Dodaj cel");
+        addDestination = new JButton("Dodaj cel");
         hint = new JLabel("Możesz wskazać kilka kolejnych celów przed zatwierdzeniem trasy.");
-            addAirship = new JButton("Zatwierdź trasę");
+        addAirship = new JButton("Zatwierdź trasę");
 
         lChoose.setBounds(5,0,300,30);
         rbPlane.setBounds(5,30,90,30);
@@ -120,16 +125,20 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         addAirshipFrame.add(hint);
         addAirshipFrame.add(addAirship);
 
+
         if(id == null) {
             addAirshipFrame.setTitle("Dodawanie samolotu");
         } else {
-            addAirshipFrame.setTitle("Modyfikowanie samolotu");
+            addAirshipFrame.setTitle("Modyfikowanie trasy");
         }
         addAirshipFrame.setSize(500,300);
         addAirshipFrame.setLayout(null);
         addAirshipFrame.setLocationRelativeTo(null);
         addAirshipFrame.setVisible(true);
         addAirshipFrame.setResizable(false);
+        addAirshipFrame.setFont(new Font(null,Font.PLAIN,25));
+        Color darkGrey = new Color(98, 105, 93);
+        this.setBackground(darkGrey);
 
         rbPlane.addActionListener(this);
         rbHeli.addActionListener(this);
@@ -140,8 +149,6 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
         addDestination.addActionListener((this));
         enterVelocity.addActionListener(this);
         enterAltitude.addActionListener(this);
-
-
     }
 
 
@@ -149,9 +156,8 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         MyRectangle newRectangle;
-
-        boolean checkpoint1=false, checkpoint2=false;
-        Point startPoint = new Point(0,0), destinationPoint = new Point(0,0);
+        Point startPoint = new Point(0,0);
+        Point destinationPoint = new Point(0,0);
 
         if(e.getSource()==setStart) {
             double startX=0, startY=0;
@@ -167,19 +173,18 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
             if(actualPoint != null) {
                 double x = parseDouble(enterX2.getText());
                 double y = parseDouble(enterY2.getText());
-                Point endpoint = new Point(x,y);
+                Point endPoint = new Point(x,y);
                 double altitude = parseDouble(enterY2.getText());
                 double velocity = parseDouble(enterY2.getText());
-                Section newSection = new Section(actualPoint, endpoint, velocity, altitude);
+                Section newSection = new Section(actualPoint, endPoint, velocity, altitude);
                 enterX2.setText("");
                 enterY2.setText("");
                 enterAltitude.setText("");
                 enterVelocity.setText("");
                 newRoute.addSection(newSection);
-                actualPoint = endpoint;
+                actualPoint = endPoint;
             } else {
                 hint.setText("Podaj punkt początkowy");
-                hint.setVisible(true);
             }
         }
 
@@ -191,7 +196,7 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
                     newAirship = new Balloon(newRoute, newRectangle);
                 }
                 if (rbHeli.isSelected()) {
-                    newRectangle = new MyRectangle(startingPoint, 50, 50);
+                    newRectangle = new MyRectangle(startingPoint, 30, 45);
                     newAirship = new Helicopter(newRoute, newRectangle);
                 }
                 if (rbGlider.isSelected()) {
@@ -199,7 +204,7 @@ public class AddAirshipWindow extends JPanel implements ActionListener {
                     newAirship = new Glider(newRoute, newRectangle);
                 }
                 if (rbPlane.isSelected()) {
-                    newRectangle = new MyRectangle(startingPoint, 70, 70);
+                    newRectangle = new MyRectangle(startingPoint, 50, 50);
                     newAirship = new Plane(newRoute, newRectangle);
                 }
                 this.radar.addAirship(newAirship);
